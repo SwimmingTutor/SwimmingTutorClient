@@ -1,6 +1,14 @@
-import logo from './assets/images/logo.png';
+import { MainLayout } from './components/layout/MainLayout.jsx';
+import { Nav } from './components/Nav.jsx';
 
 function App() {
-  return <img src={logo} />;
+  return (
+    <>
+      {/* Miain Section */}
+      <MainLayout />
+      {/* Navigater Section */}
+      <Nav />
+    </>
+  )
 }
 export default App;
