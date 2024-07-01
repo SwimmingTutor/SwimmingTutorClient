@@ -11,7 +11,7 @@ export const SelectOption = ({value}) => {
                 classNames(
                     focus ? 'bg-primary-400 text-white' : '',
                     !focus ? 'text-gray-900' : '',
-                    'relative cursor-default select-none py-2 pl-3 pr-9',
+                    'relative cursor-default select-none py-2 pl-1 pr-9',
                 )
             }
             value={value}
