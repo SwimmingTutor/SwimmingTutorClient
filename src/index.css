@@ -2,7 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+    letter-spacing:-0.5px;
+    -ms-overflow-style: none;
+}
+::-webkit-scrollbar {
+    /* scroll bar 없앰 */
+    display: none;
+}
 #root {
     width: 100%;
     overflow-y: auto;
+    --tw-text-opacity: 1;
+    color: rgb(115 115 115 / var(--tw-text-opacity));
+}
+
+#wrapper, nav.dock-menu {
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.05) ;
 }
