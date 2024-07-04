@@ -1,6 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
 
-import { Nav } from './components/Nav.jsx';
 import { MainPage } from './pages/main/MainPage.jsx';
 import { SwimmingpoolPage } from './pages/swimmingpool/SwimmingpoolPage.jsx';
 import { RoutinePage } from './pages/routine/RoutinePage.jsx';
@@ -41,7 +40,6 @@ function App() {
           <Route path='join' element={<JoinPage />} />
         </Route>
       </Routes>
-      <Nav />
     </>
   )
 }
