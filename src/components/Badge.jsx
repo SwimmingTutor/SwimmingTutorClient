@@ -4,7 +4,7 @@ export const Badge = ({title, content, img, size="w-14"}) => {
     return (
         <div className="badge-container w-full h-fit flex flex-col gap-1 justify-between items-center">
             <div className={`
-                                h-fit aspect-square overflow-hidden rounded-full 
+                                h-fit aspect-square object-contain mx-auto rounded-full 
                                 ${size} 
                                 ${isLock? "p-4 bg-zinc-300":"p-2 bg-zinc-100"}
                             `}>
