@@ -37,6 +37,6 @@ module.exports = {
     new webpack.ProvidePlugin({
       React: 'react'
     }),
-    new Dotenv(),
+    new Dotenv()
   ]
 };
