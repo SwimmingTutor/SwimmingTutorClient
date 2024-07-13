@@ -1,15 +1,52 @@
-// App.jsx
-import logo from './assets/images/logo.png';
+import { Routes, Route } from 'react-router-dom';
+
+import { MainPage } from './pages/main/MainPage.jsx';
+import { SwimmingpoolPage } from './pages/swimmingpool/SwimmingpoolPage.jsx';
+import { RoutinePage } from './pages/routine/RoutinePage.jsx';
+import { MyPage } from './pages/my/MyPage.jsx';
+
+import { NotFoundPage } from './pages/NotFoundPage.jsx';
+import { TestPage } from './pages/TestPage.jsx';
+import { PageContainer } from './containers/PageContainer.jsx';
+import { LoginPage } from './pages/accounts/LoginPage.jsx';
+import { AccountsContainer } from './containers/AccountsContainer.jsx';
+import { JoinPage } from './pages/accounts/JoinPage.jsx';
+import { RecordPage } from './pages/my/RecordPage.jsx';
 import React from 'react';
 import ExampleGraph from './components/ExampleGraph';
+import Example from './components/ExampleGraph';
 
 function App() {
   return (
-    <div>
-      <h1>My React App</h1>
+    <>
+      <Routes>
+        {/* default page layout */}
+        <Route path='/' element={<PageContainer />}>
+          <Route path='' element={<MainPage />} />
+          <Route path='swimmingpool' element={<SwimmingpoolPage />} />
+          <Route path='routine' element={<RoutinePage />} />
+          <Route path='report' element={<ExampleGraph />} />
+
+          <Route path='my'>
+            <Route path='' element={<MyPage />} />
+            <Route path='record' element={<RecordPage />} />
+          </Route>
+
+          {/* 없는 페이지 요청 시 */}
+          <Route path='*' element={<NotFoundPage />} />
+          {/* test page TODO: delete*/}
+          <Route path='/test' element={<TestPage />} />
+        </Route>
+
+        {/* accounts 관련 페이지 */}
+        <Route path='/accounts' element={<AccountsContainer />}>
+          <Route path='login' element={<LoginPage />} />
+          <Route path='join' element={<JoinPage />} />
+        </Route>
+      </Routes>
+
       <ExampleGraph />
-      <img src={logo} />;
-    </div>
+    </>
   );
 }
 export default App;
