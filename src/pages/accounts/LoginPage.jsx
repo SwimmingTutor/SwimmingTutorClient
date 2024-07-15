@@ -2,6 +2,8 @@ import axios from 'axios';
 import { DividerWithText } from '../../components/DividerWitdhText.jsx';
 import { GoogleLoginButton } from '../../components/GoogleLoginButton.jsx';
 
+import { Button } from '../../components/Button.jsx';
+
 const onGoogleLogin = () => {
   window.location.href = 'http://localhost:8615/oauth2/authorization/google';
 };
@@ -27,6 +29,7 @@ export const LoginPage = () => {
         <button onClick={onGoogleLogin}>Google Login</button>
         <br />
         <button onClick={getData}>Get Data</button>
+        <Button content='Google'></Button>
       </div>
     </>
   );

@@ -4,6 +4,8 @@ import { MainPage } from './pages/main/MainPage.jsx';
 import { SwimmingpoolPage } from './pages/swimmingpool/SwimmingpoolPage.jsx';
 import { RoutinePage } from './pages/routine/RoutinePage.jsx';
 import { MyPage } from './pages/my/MyPage.jsx';
+import { ProfilePage } from './pages/my/ProfilePage.jsx';
+import { ExperiencePage } from './pages/my/ExperiencePage.jsx';
 
 import { NotFoundPage } from './pages/NotFoundPage.jsx';
 // import { TestPage } from './pages/TestPage.jsx';
@@ -11,6 +13,7 @@ import { PageContainer } from './containers/PageContainer.jsx';
 import { LoginPage } from './pages/accounts/LoginPage.jsx';
 import { AccountsContainer } from './containers/AccountsContainer.jsx';
 import { JoinPage } from './pages/accounts/JoinPage.jsx';
+import { TermsPage } from './pages/accounts/TermsPage.jsx';
 // import { RecordPage } from './pages/my/RecordPage.jsx';
 
 function App() {
@@ -23,8 +26,10 @@ function App() {
           <Route path='swimmingpool' element={<SwimmingpoolPage />} />
           <Route path='routine' element={<RoutinePage />} />
 
-          <Route path='my'>
+          <Route path='/my'>
             <Route path='' element={<MyPage />} />
+            <Route path='profile' element={<ProfilePage />} />
+            <Route path='experience' element={<ExperiencePage />} />
             {/* <Route path='record' element={<RecordPage />}/>  */}
           </Route>
 
@@ -38,9 +43,11 @@ function App() {
         <Route path='/accounts' element={<AccountsContainer />}>
           <Route path='login' element={<LoginPage />} />
           <Route path='join' element={<JoinPage />} />
+          <Route path='terms' element={<TermsPage />} />
         </Route>
       </Routes>
     </>
   );
 }
+
 export default App;
