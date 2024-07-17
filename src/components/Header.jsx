@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import { Logo } from './Logo.jsx';
-import { PageTitle } from './PageTitle.jsx';
+import Logo from './UI/Logo.jsx';
+import PageTitle from './PageTitle.jsx';
 
 function getHeaderType(type) {
   return {
@@ -14,7 +14,7 @@ function getHeaderType(type) {
   }[type];
 }
 
-export const Header = ({ headerType }) => {
+const Header = ({ headerType }) => {
   let headerClassName = 'sticky top-0 z-40 w-full h-14 p-1 flex flex-row justify-between items-center bg-white ';
   let logoContainerClassName = 'logo-container w-full h-full flex items-center p-5 max-w-[7rem]';
   let accountContainerClassName = 'account-container w-full max-w-32 p-3 flex flex-row justify-around text-xs';
@@ -34,3 +34,5 @@ export const Header = ({ headerType }) => {
     </header>
   );
 };
+
+export default Header;

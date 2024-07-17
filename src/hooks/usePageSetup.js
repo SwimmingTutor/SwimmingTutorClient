@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
-import { Main } from "../components/Main.jsx";
+import Main from "../components/Layout/Main.jsx";
 
 const usePageSetup = (headerType="home", WrapperComponent=Main) => {
     const { handleHeaderType, handleWrapper } = useOutletContext();

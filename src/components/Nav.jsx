@@ -54,7 +54,7 @@ const NavElement = ({ page, path, name, icon, activeIcon, activePage }) => {
     )
 }
 
-export const Nav = ({ activePage }) => {
+const Nav = ({ activePage }) => {
     return createPortal(
         <div className="fixed bottom-0 w-full h-14 z-40">
             <div className="dock-container container w-app h-full">
@@ -80,3 +80,4 @@ export const Nav = ({ activePage }) => {
         </div>, document.getElementById('dock')
     )
 }
+export default  Nav;
