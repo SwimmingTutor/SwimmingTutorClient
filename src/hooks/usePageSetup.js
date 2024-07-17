@@ -1,18 +1,14 @@
 import { useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
-import Main from "../components/Layout/Main.jsx";
 
-const usePageSetup = (headerType="home", WrapperComponent=Main) => {
-    const { handleHeaderType, handleWrapper } = useOutletContext();
+const usePageSetup = (headerType = "home") => {
+    const { handleHeaderType } = useOutletContext();
 
     useEffect(() => {
         if (headerType) {
             handleHeaderType(headerType);
         }
-        if (WrapperComponent) {
-            handleWrapper(WrapperComponent);
-        }
-    }, [headerType, WrapperComponent, handleHeaderType, handleWrapper]);
+    }, [headerType, handleHeaderType]);
 };
 
 export default usePageSetup;

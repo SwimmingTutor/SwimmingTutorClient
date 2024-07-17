@@ -1,11 +1,10 @@
 import { useRouteError } from 'react-router-dom';
 import PageInfoText from '../components/PageInfoText.jsx';
-import CenterWrapper from '../components/Layout/CenterWrapper.jsx';
 import usePageSetup from '../hooks/usePageSetup.js';
+import PageContainer from '../containers/PageContainer.jsx';
 
 const ErrorPage = () => {
     const error = useRouteError();
-    usePageSetup("home", CenterWrapper);
 
     // default
     let title = '페이지 요청 실패';
@@ -21,7 +20,10 @@ const ErrorPage = () => {
     }
 
     return (
-        <PageInfoText title={title} content={message} />
+        <PageContainer>
+            <PageInfoText title={title} content={message} />
+        </PageContainer>
+        
     )
 }
 
