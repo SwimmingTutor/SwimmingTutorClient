@@ -6,18 +6,16 @@ import { RoutinePage } from './pages/routine/RoutinePage.jsx';
 import { MyPage } from './pages/my/MyPage.jsx';
 
 import { NotFoundPage } from './pages/NotFoundPage.jsx';
-import { TestPage } from './pages/TestPage.jsx';
+// import { TestPage } from './pages/TestPage.jsx';
 import { PageContainer } from './containers/PageContainer.jsx';
 import { LoginPage } from './pages/accounts/LoginPage.jsx';
 import { AccountsContainer } from './containers/AccountsContainer.jsx';
 import { JoinPage } from './pages/accounts/JoinPage.jsx';
-import { RecordPage } from './pages/my/RecordPage.jsx';
-import ExampleGraph from './components/ExampleGraph';
+// import { RecordPage } from './pages/my/RecordPage.jsx';
 
 function App() {
   return (
     <>
-      <ExampleGraph />
       <Routes>
         {/* default page layout */}
         <Route path='/' element={<PageContainer />}>
@@ -27,13 +25,13 @@ function App() {
 
           <Route path='my'>
             <Route path='' element={<MyPage />} />
-            <Route path='record' element={<RecordPage />} />
+            {/* <Route path='record' element={<RecordPage />} /> */}
           </Route>
 
           {/* 없는 페이지 요청 시 */}
           <Route path='*' element={<NotFoundPage />} />
           {/* test page TODO: delete*/}
-          <Route path='/test' element={<TestPage />} />
+          {/* <Route path='/test' element={<TestPage />} /> */}
         </Route>
 
         {/* accounts 관련 페이지 */}
