@@ -22,6 +22,8 @@ import LoginPage from './pages/Oauth/Login.jsx'
 import JoinPage from './pages/Oauth/Join.jsx'
 import TermsPage from './pages/Oauth/Terms.jsx'
 
+import { tokenLoader, checkAuthLoader } from './utils/auth.js';
+
 const router = createBrowserRouter([
   {
     /// default page layout
@@ -29,7 +31,7 @@ const router = createBrowserRouter([
     path: '/',
     element: <PageContainer />,
     errorElement: <ErrorPage />,
-    // TODO: 인증 loader-tokenLoader 정의
+    loader: tokenLoader,
     children: [
       // Home
       {
