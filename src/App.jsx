@@ -14,6 +14,7 @@ import RoutinePage from './pages/Routine/Routine.jsx';
 
 import MyContainer from './containers/MyContainer.jsx';
 import MyPage from './pages/My/My.jsx';
+import RecordPage from './pages/My/Record.jsx';
 import ProfilePage from './pages/My/Profile.jsx';
 import ExperiencePage from './pages/My/Experience.jsx';
 
@@ -72,6 +73,10 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <MyPage />
+          },
+          {
+            path: 'record',
+            element: <RecordPage />
           },
           {
             path: 'profile',
