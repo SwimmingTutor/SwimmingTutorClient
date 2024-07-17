@@ -4,6 +4,7 @@ import { MainPage } from './pages/main/MainPage.jsx';
 import { SwimmingpoolPage } from './pages/swimmingpool/SwimmingpoolPage.jsx';
 import { RoutinePage } from './pages/routine/RoutinePage.jsx';
 import { MyPage } from './pages/my/MyPage.jsx';
+import { Level } from './pages/my/Level.jsx';
 
 import { NotFoundPage } from './pages/NotFoundPage.jsx';
 import { PageContainer } from './containers/PageContainer.jsx';
@@ -23,6 +24,7 @@ function App() {
 
           <Route path='my'>
             <Route path='' element={<MyPage />} />
+            <Route path='level' element={<Level />} />
           </Route>
 
           {/* 없는 페이지 요청 시 */}

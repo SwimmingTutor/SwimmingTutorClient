@@ -15,7 +15,7 @@ const MANU_ELEMENT_INFO = [
     },
     {
         name: "내 수영 레벨",
-        path: "",
+        path: "level",
     },
 ];
 export const MenuList = () => {
