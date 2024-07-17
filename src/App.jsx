@@ -23,7 +23,7 @@ function App() {
         {/* default page layout */}
         <Route path='/' element={<PageContainer />}>
           <Route path='' element={<MainPage />} />
-          <Route path='swimmingpool' element={<SwimmingpoolPage />} />
+          {/* <Route path='swimmingpool' element={<SwimmingpoolPage />} /> */}
           <Route path='routine' element={<RoutinePage />} />
 
           <Route path='/my'>
