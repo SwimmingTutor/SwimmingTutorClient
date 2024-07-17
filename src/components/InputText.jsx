@@ -1,5 +1,10 @@
 // label 도 같이
-export const InputText = ({ label = 'label', placeholder = 'placeholder', defaultValue = undefined }) => {
+export const InputText = ({
+  type = 'text',
+  label = 'label',
+  placeholder = 'placeholder',
+  defaultValue = undefined
+}) => {
   // TODO: default 제거
   return (
     <div className='col-span-full'>
@@ -8,7 +13,7 @@ export const InputText = ({ label = 'label', placeholder = 'placeholder', defaul
       </label>
       <div className='mt-2'>
         <input
-          type='text'
+          type={type}
           name={label}
           id={label}
           autoComplete={label}

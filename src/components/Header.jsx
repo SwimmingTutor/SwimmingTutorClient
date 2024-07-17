@@ -7,7 +7,10 @@ function getHeaderType(type) {
     home: <Logo />,
     swimmingpool: <PageTitle title='수영장'></PageTitle>,
     routine: <PageTitle title='루틴'></PageTitle>,
-    my: <PageTitle title='마이'></PageTitle>
+    my: <PageTitle title='마이'></PageTitle>,
+    terms: <PageTitle title='약관동의'></PageTitle>,
+    profile: <PageTitle title='프로필 설정'></PageTitle>,
+    experience: <PageTitle title='수영 경험 설정'></PageTitle>
   }[type];
 }
 
