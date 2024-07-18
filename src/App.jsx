@@ -18,14 +18,16 @@ import RecordPage from './pages/My/Record.jsx';
 import ProfilePage from './pages/My/Profile.jsx';
 import ExperiencePage from './pages/My/Experience.jsx';
 
-import AccountsContainer from './containers/AccountsContainer.jsx'
-import LoginPage from './pages/Oauth/Login.jsx'
-import JoinPage from './pages/Oauth/Join.jsx'
-import TermsPage from './pages/Oauth/Terms.jsx'
+import AccountsContainer from './containers/AccountsContainer.jsx';
+import LoginPage from './pages/Oauth/Login.jsx';
+import LoginRedirectPage from './pages/Oauth/LoginRedirect.jsx';
+import JoinPage from './pages/Oauth/Join.jsx';
+import TermsPage from './pages/Oauth/Terms.jsx';
 
 const router = createBrowserRouter([
   {
     /// default page layout
+
     id: 'root',
     path: '/',
     element: <PageContainer />,
@@ -39,7 +41,7 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <HomePage />,
+            element: <HomePage />
           }
         ]
       },
@@ -50,7 +52,7 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <SwimmingpoolPage />,
+            element: <SwimmingpoolPage />
           }
         ]
       },
@@ -62,7 +64,7 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <RoutinePage />
-          },
+          }
         ]
       },
       // My
@@ -85,7 +87,7 @@ const router = createBrowserRouter([
           {
             path: 'experience',
             element: <ExperiencePage />
-          },
+          }
         ]
       }
     ]
@@ -101,14 +103,17 @@ const router = createBrowserRouter([
         element: <LoginPage />
       },
       {
+        path: 'login-redirect',
+        element: <LoginRedirectPage />
+      },
+      {
         path: 'join',
         element: <JoinPage />
       },
       {
         path: 'terms',
         element: <TermsPage />
-      },
-
+      }
     ]
   }
 ]);

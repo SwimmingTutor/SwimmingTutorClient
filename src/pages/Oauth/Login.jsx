@@ -1,15 +1,19 @@
-import axios from 'axios';
+import axios from '../../utils/https/axios/customAxios';
 import DividerWithText from '../../components/DividerWitdhText.jsx';
 
 import Button from '../../components/UI/Button.jsx';
 
 const onGoogleLogin = () => {
-  window.location.href = 'http://localhost:8615/oauth2/authorization/google';
+  window.location.href = 'http://localhost:8080/oauth2/authorization/google';
 };
 
-const getData = () => {
-  axios
-    .get('http://localhost:8615/my', { withCredentials: true })
+const getData = async () => {
+  await axios
+    .get('level/log', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+      }
+    })
     .then(res => {
       alert(JSON.stringify(res.data));
     })
