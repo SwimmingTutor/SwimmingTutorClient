@@ -1,9 +1,7 @@
-import ExampleGraph from '../../components/Home/ExampleGraph.js';
+import ReportGraph from '../../components/Home/ReportGraph.js';
 
 const HomePage = () => {
-  return (
-    <ExampleGraph />
-  );
+  return <ReportGraph />;
 };
 
 export default HomePage;
