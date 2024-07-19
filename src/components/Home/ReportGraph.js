@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import axios from 'axios';
+import axios from '../../utils/https/axios/customAxios';
 
 const ReportGraph = () => {
   const [data, setData] = useState([]);
@@ -10,10 +10,13 @@ const ReportGraph = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/report', {
+        const response = await axios.get('/report', {
           params: {
             oauthLoginId: 'user1@gmail.com',
             oauthLoginPlatform: 'google'
+          },
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
           }
         });
 
