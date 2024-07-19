@@ -15,9 +15,9 @@ const getData = async () => {
       }
     })
     .then(res => {
-      alert(JSON.stringify(res.data));
+      console.log(res.data);
     })
-    .catch(error => alert(error));
+    .catch(error => console.log(error));
 };
 
 const LoginPage = () => {
