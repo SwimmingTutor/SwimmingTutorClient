@@ -3,7 +3,7 @@ import usePageSetup from '../hooks/usePageSetup';
 
 const MyContainer = () => {
     usePageSetup("my");
-    // console.log('MyContainer');
+
     return (
         <Outlet />
     )
