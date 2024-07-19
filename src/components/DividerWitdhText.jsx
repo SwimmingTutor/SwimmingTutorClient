@@ -1,4 +1,4 @@
-export const DividerWithText = ({ text }) => {
+const DividerWithText = ({ text }) => {
     const dividerDivClassName = "w-5/12 justify-between items-center border-t-[0.1px] border-b-neutral-200";
     return (
         <div className="m-auto w-11/12 flex flex-row justify-between items-center">
@@ -8,3 +8,5 @@ export const DividerWithText = ({ text }) => {
         </div>
     )
 }
+
+export default DividerWithText;

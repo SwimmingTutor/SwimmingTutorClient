@@ -1,18 +1,29 @@
-import { useEffect } from "react";
-import { useOutletContext } from "react-router-dom";
-import { Main } from "../components/Main.jsx";
+import { useContext, useEffect } from 'react';
+import { HeaderContext } from '../context/HeaderContext.jsx';
 
-const usePageSetup = (headerType="home", WrapperComponent=Main) => {
-    const { handleHeaderType, handleWrapper } = useOutletContext();
+const usePageSetup = pageType => {
+  const { handleHeaderType } = useContext(HeaderContext);
 
-    useEffect(() => {
-        if (headerType) {
-            handleHeaderType(headerType);
-        }
-        if (WrapperComponent) {
-            handleWrapper(WrapperComponent);
-        }
-    }, [headerType, WrapperComponent, handleHeaderType, handleWrapper]);
+  useEffect(() => {
+    handleHeaderType(pageType);
+  }, [pageType, handleHeaderType]);
+
+  return null;
 };
 
 export default usePageSetup;
+
+// import { useOutletContext } from 'react-router-dom';
+// import { useEffect } from 'react';
+
+// const usePageSetup = (headerType = 'home') => {
+//   const { handleHeaderType } = useOutletContext();
+
+//   useEffect(() => {
+//       if (headerType) {
+//           handleHeaderType(headerType);
+//       }
+//   }, [headerType, handleHeaderType]);
+// };
+
+// export default usePageSetup;

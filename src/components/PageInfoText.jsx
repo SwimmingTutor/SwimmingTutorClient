@@ -1,4 +1,4 @@
-export const PageInfoText = ({ title, content }) => {
+const PageInfoText = ({ title, content }) => {
     return (
         <div className="flex flex-col gap-5 cursor-default text-center">
             <div className='font-extrabold text-primary text-5xl'>{title}</div>
@@ -6,3 +6,4 @@ export const PageInfoText = ({ title, content }) => {
         </div>
     )
 }
+export default PageInfoText;
