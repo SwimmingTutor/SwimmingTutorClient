@@ -12,6 +12,8 @@ import SwimmingpoolPage from './pages/Swimmingpool/Swimmingpool.jsx';
 
 import RoutineContainer from './containers/RoutineContainer.jsx';
 import RoutinePage from './pages/Routine/Routine.jsx';
+import RoutineDetailPage from './pages/Routine/RoutineDetail.jsx';
+import RoutineCreatePage from './pages/Routine/RoutineCreate.jsx';
 
 import MyContainer from './containers/MyContainer.jsx';
 import MyPage from './pages/my/My.jsx';
@@ -67,8 +69,16 @@ const App = () => {
           element: <RoutineContainer />,
           children: [
             {
-              index: true,
+              path:'',
               element: <RoutinePage />
+            },
+            {
+              path: 'detail',
+              element: <RoutineDetailPage />
+            },
+            {
+              path: 'create',
+              element: <RoutineCreatePage />
             }
           ]
         },
