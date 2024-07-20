@@ -21,7 +21,7 @@ const ReportGraph = () => {
         console.log(response.data);
 
         const transformedData = response.data
-          .filter(item => ['distance', 'speed'].includes(item.category)) // 관심 있는 데이터 카테고리만 추출
+          .filter(item => ['distance', 'speed', 'heartRate', 'calories'].includes(item.category)) // 관심 있는 데이터 카테고리만 추출
           .reduce((acc, item) => {
             const { startTime } = item;
             const category = item.category;
@@ -64,7 +64,7 @@ const ReportGraph = () => {
   };
 
   const renderLines = () => {
-    const categories = ['distance', 'speed'];
+    const categories = ['distance', 'speed', 'heartRate', 'calories'];
 
     if (selectedCategory === 'all') {
       return categories.map(category => (
@@ -112,8 +112,8 @@ const ReportGraph = () => {
           <option value='all'>전체</option>
           <option value='distance'>랩 횟수</option>
           <option value='speed'>속도</option>
-          {/* <option value='심박수'>심박수</option> */}
-          {/* <option value='칼로리'>칼로리</option> */}
+          <option value='heartRate'>심박수</option>
+          <option value='calories'>칼로리</option>
         </select>
       </div>
       <ResponsiveContainer width='100%' height={400}>
