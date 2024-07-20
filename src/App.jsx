@@ -69,7 +69,7 @@ const App = () => {
           element: <RoutineContainer />,
           children: [
             {
-              path:'',
+              path: '',
               element: <RoutinePage />
             },
             {
@@ -102,14 +102,6 @@ const App = () => {
             {
               path: 'record',
               element: <RecordPage />
-            },
-            {
-              path: 'profile',
-              element: <ProfilePage />
-            },
-            {
-              path: 'experience',
-              element: <ExperiencePage />
             }
           ]
         }
@@ -136,6 +128,14 @@ const App = () => {
         {
           path: 'terms',
           element: <TermsPage />
+        },
+        {
+          path: 'profile',
+          element: <ProfilePage />
+        },
+        {
+          path: 'experience',
+          element: <ExperiencePage />
         }
       ]
     }
@@ -147,4 +147,3 @@ const App = () => {
 };
 
 export default App;
-
