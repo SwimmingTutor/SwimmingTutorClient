@@ -21,13 +21,13 @@ const NAV_ELEMENT_INFO = [
     icon: HomeIcon,
     active_icon: HomeIconActiveIcon
   },
-  {
-    name: '수영장',
-    page: 'swimmingpool',
-    path: '/swimmingpool',
-    icon: SwimmingPoolIcon,
-    active_icon: SwimmingPoolActiveIcon
-  },
+  // {
+  //   name: '수영장',
+  //   page: 'swimmingpool',
+  //   path: '/swimmingpool',
+  //   icon: SwimmingPoolIcon,
+  //   active_icon: SwimmingPoolActiveIcon
+  // },
   {
     name: '루틴',
     page: 'routine',
