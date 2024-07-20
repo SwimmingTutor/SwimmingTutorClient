@@ -1,16 +1,18 @@
 import { Outlet } from 'react-router-dom';
-import { Wrapper } from '../components/Wrapper.jsx';
-import { AccounstHeader } from '../components/AccountsHeader.jsx';
-import { CenterWrapper } from '../components/CenterWrapper.jsx';
+import Wrapper from '../components/Layout/Wrapper.jsx';
+import AccounstHeader from '../components/AccountsHeader.jsx';
+import CenterWrapper from '../components/Layout/CenterWrapper.jsx';
 
-export const AccountsContainer = () => {
+const AccountsContainer = () => {
   return (
     <Wrapper>
-      {/* <CenterWrapper> */}
-      {/* <AccounstHeader /> */}
-      {/* <Outlet context={{ handleHeaderType }} /> */}
-      <Outlet />
-      {/* </CenterWrapper> */}
+      <CenterWrapper>
+        <AccounstHeader />
+        {/* <Outlet context={{ handleHeaderType }} /> */}
+        <Outlet />
+      </CenterWrapper>
     </Wrapper>
   );
 };
+
+export default AccountsContainer;
