@@ -29,11 +29,11 @@ const RoutineDetailPage = () => {
       }
     };
     fetchData();
-  }, [{ routineNo }]);
-  console.log(trainings);
+  }, []);
+  // console.log(trainings);
 
   trainings.map(training => {
-    console.log(training);
+    // console.log(training);
     switch (training.session) {
       case sessionName[0]:
         warmupData.push(training);
