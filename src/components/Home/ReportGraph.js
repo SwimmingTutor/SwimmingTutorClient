@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import axios from '../../utils/https/axios/customAxios';
+import MyActiveIcon from '../../assets/icons/my-active.svg';
 
 const ReportGraph = () => {
   const [data, setData] = useState([]);
@@ -11,33 +12,33 @@ const ReportGraph = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get('/report', {
-          params: {
-            oauthLoginId: 'user1@gmail.com',
-            oauthLoginPlatform: 'google'
-          },
           headers: {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`
           }
         });
 
         // 데이터 구조 변경 및 최대값 추출
+        console.log(response.data);
+
         const transformedData = response.data
-          .filter(item => ['랩 횟수', '속도', '심박수', '칼로리'].includes(item.recordId.category)) // 관심 있는 데이터 카테고리만 추출
+          .filter(item => ['distance', 'speed'].includes(item.category)) // 관심 있는 데이터 카테고리만 추출
           .reduce((acc, item) => {
-            const { starttime } = item.recordId;
-            const category = item.recordId.category;
+            const { startTime } = item;
+            const category = item.category;
             const value = item.value;
 
-            if (!acc[starttime]) {
-              acc[starttime] = { name: starttime };
+            if (!acc[startTime]) {
+              acc[startTime] = { name: startTime };
             }
 
-            acc[starttime][category] = value;
+            acc[startTime][category] = value;
             return acc;
           }, []);
 
+        console.log(transformedData);
+
         const maxValues = response.data.reduce((acc, item) => {
-          const category = item.recordId.category;
+          const category = item.category;
           const value = item.value;
 
           if (!acc[category] || value > acc[category]) {
@@ -63,7 +64,7 @@ const ReportGraph = () => {
   };
 
   const renderLines = () => {
-    const categories = ['랩 횟수', '속도', '심박수', '칼로리'];
+    const categories = ['distance', 'speed'];
 
     if (selectedCategory === 'all') {
       return categories.map(category => (
@@ -78,13 +79,13 @@ const ReportGraph = () => {
 
   const getColor = category => {
     switch (category) {
-      case '랩 횟수':
+      case 'distance':
         return '#8884d8';
-      case '속도':
+      case 'speed':
         return '#82ca9d';
-      case '심박수':
+      case 'heartRate':
         return '#ffc658';
-      case '칼로리':
+      case 'calories':
         return '#ff7300';
       default:
         return '#000000';
@@ -109,10 +110,10 @@ const ReportGraph = () => {
           }}
         >
           <option value='all'>전체</option>
-          <option value='랩 횟수'>랩 횟수</option>
-          <option value='속도'>속도</option>
-          <option value='심박수'>심박수</option>
-          <option value='칼로리'>칼로리</option>
+          <option value='distance'>랩 횟수</option>
+          <option value='speed'>속도</option>
+          {/* <option value='심박수'>심박수</option> */}
+          {/* <option value='칼로리'>칼로리</option> */}
         </select>
       </div>
       <ResponsiveContainer width='100%' height={400}>
@@ -135,11 +136,7 @@ const ReportGraph = () => {
         <div>
           {['랩 횟수', '속도', '심박수', '칼로리'].map(category => (
             <div key={category} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-              <img
-                src='path_to_your_image.png'
-                alt={category}
-                style={{ width: '20px', height: '20px', marginRight: '10px' }}
-              />
+              <img src={MyActiveIcon} alt={category} style={{ width: '20px', height: '20px', marginRight: '10px' }} />
               <span>{category}</span>
             </div>
           ))}
