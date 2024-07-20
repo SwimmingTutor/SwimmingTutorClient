@@ -1,37 +1,41 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../../components/UI/Button.jsx';
+import axios from '../../utils/https/axios/customAxios';
 import CenterWrapper from '../../components/Layout/CenterWrapper.jsx';
-// import PageInfoText from '../../components/PageInfoText.jsx';
 
-const RoutineList = () => {
+const RoutinePage = () => {
   const [routineList, setRoutineList] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:8080/routine')
-      .then(response => response.json())
-      .then(data => setRoutineList(data))
-      .catch(error => console.error(error));
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('/routine', {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+          }
+        });
+        setRoutineList(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
   }, []);
-  // console.log(routineList);
 
   return (
     <CenterWrapper>
       {routineList.map(routine => (
-        <div key={routine.routineId} className='my-4 border p-4'>
-          <Link to={`/routine/detail`}>
+        <Link to={`/routine/${routine.routineNo}`}>
+          <div key={routine.routineNo} className='my-4 border p-4'>
             <h3 className='text-xl font-bold'>{routine.routineName}</h3>
-          </Link>
-          <p className='text-gray-500'>{routine.created}</p>
-        </div>
+            <p className='text-gray-500'>{routine.created}</p>
+          </div>
+        </Link>
       ))}
       <Button content='루틴 생성' size='fit' path='/routine/create' />
     </CenterWrapper>
   );
-};
-
-const RoutinePage = () => {
-  return <RoutineList />;
 };
 
 export default RoutinePage;

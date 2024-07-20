@@ -16,7 +16,7 @@ import RoutineDetailPage from './pages/Routine/RoutineDetail.jsx';
 import RoutineCreatePage from './pages/Routine/RoutineCreate.jsx';
 
 import MyContainer from './containers/MyContainer.jsx';
-import MyPage from './pages/my/My.jsx';
+import MyPage from './pages/My/My.jsx';
 import RecordPage from './pages/My/Record.jsx';
 import ProfilePage from './pages/My/Profile.jsx';
 import ExperiencePage from './pages/My/Experience.jsx';
@@ -73,7 +73,7 @@ const App = () => {
               element: <RoutinePage />
             },
             {
-              path: 'detail',
+              path: ':routineNo',
               element: <RoutineDetailPage />
             },
             {
