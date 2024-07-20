@@ -5,9 +5,8 @@ function useWebViewBridge() {
   const sendDataToServer = useCallback(async parsedData => {
     try {
       const response = await axios.post(
-        'record',
-        { data: parsedData },
-        {}
+        'record/',
+        { data: parsedData.flat() }
         // {
         //   data: parsedData
         // }
@@ -28,8 +27,7 @@ function useWebViewBridge() {
   useEffect(() => {
     window.receiveDataFromKotlin = data => {
       try {
-        console.log('data:', data);
-        sendDataToServer(data);
+        sendDataToServer(JSON.parse(data));
       } catch (error) {
         console.error('Error parsing data from Kotlin:', error);
       }
