@@ -9,12 +9,14 @@ export const TermsPage = () => {
   const onClick = () => {};
 
   return (
-    <CenterWrapper>
+    <>
+      {/* // <CenterWrapper> */}
       <Header headerType='terms' />
       {blankDiv}
       <TermsAgreement></TermsAgreement>
       {blankDiv}
       <Button content='동의하고 시작하기' onClick={onClick}></Button>
-    </CenterWrapper>
+      {/* // </CenterWrapper> */}
+    </>
   );
 };

@@ -5,6 +5,7 @@ import { Button } from '../../components/Button.jsx';
 import { ModalDeleteAccount } from '../../components/ModalDeleteAccount.jsx';
 import { InputText } from '../../components/InputText.jsx';
 import GenderRadio from '../../components/GenderRadio.jsx';
+import usePageSetup from '../../hooks/usePageSetup.js';
 
 const onClick = () => {};
 
@@ -13,6 +14,7 @@ const onClick = () => {};
 // header text 잘림
 export const ProfilePage = () => {
   const deleteAccountModalRef = useRef();
+  usePageSetup('profile');
 
   const handleOpenAccountModal = () => {
     deleteAccountModalRef.current.open();
@@ -20,8 +22,7 @@ export const ProfilePage = () => {
 
   const blankDiv5 = <div className='h-5'></div>;
   return (
-    <CenterWrapper>
-      <Header headerType='profile' />
+    <>
       {blankDiv5}
       <InputText label='닉네임' placeholder='닉네임' />
       {blankDiv5}
@@ -51,6 +52,6 @@ export const ProfilePage = () => {
         입력한 정보와 수영 루틴이 모두 삭제되며, <br />
         복구할 수 없습니다.
       </ModalDeleteAccount>
-    </CenterWrapper>
+    </>
   );
 };

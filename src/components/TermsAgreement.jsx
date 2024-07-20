@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Modal } from './Modal.jsx';
+import { ModalTerms } from './ModalTerms.jsx';
 import termsData from '../assets/data/termsData.json';
 
 // TODO: 이용약관 동의 페이지
@@ -124,12 +124,12 @@ const TermsAgreement = () => {
         </button>
       </div>
 
-      <Modal ref={serviceModalRef} buttonCaption='닫기'>
+      <ModalTerms ref={serviceModalRef} buttonCaption='닫기'>
         {renderTermsContent('ServiceTerms')}
-      </Modal>
-      <Modal ref={privacyModalRef} buttonCaption='닫기'>
+      </ModalTerms>
+      <ModalTerms ref={privacyModalRef} buttonCaption='닫기'>
         {renderTermsContent('PrivacyTerms')}
-      </Modal>
+      </ModalTerms>
     </div>
   );
 };
