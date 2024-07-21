@@ -4,6 +4,8 @@ import PageTitle from '../../components/PageTitle.jsx';
 import Steps from '../../components/UI/Steps.jsx';
 import PageInfoText from '../../components/PageInfoText.jsx';
 import usePageSetup from '../../hooks/usePageSetup.js';
+import Button from '../../components/UI/Button.jsx';
+import TestForm from '../../components/My/TestForm.jsx';
 
 const LevelTestPage = () => {
   const param = useParams();
@@ -11,15 +13,10 @@ const LevelTestPage = () => {
   usePageSetup('level-test');
 
   const [currentStep, setCurrentStep] = useState(1);
-
-  const blankDiv = <div className='h-10'></div>;
+  
+  const blankDiv3 = <div className='h-3'></div>;
+  const blankDiv5 = <div className='h-5'></div>;
   const steps = ['speed', 'distance', 'technique'];
-
-  const pageDescriptions = {
-    speed: '속도 테스트를 수행합니다.',
-    distance: '거리 테스트를 수행합니다.',
-    technique: '기술 테스트를 수행합니다.'
-  };
 
   const contentForStep = step => {
     switch (step) {
@@ -48,6 +45,12 @@ const LevelTestPage = () => {
     }
   };
   const strokenameKr = translateStrokeName(param.strokename);
+  
+  const pageDescriptions = {
+    speed: `${strokenameKr}으로 50m 완주 시 소요되는 시간을 선택해주세요.`,
+    distance: `50분 동안 ${strokenameKr}으로 완주할 수 있는 거리를 선택해주세요.`,
+    technique: `${strokenameKr} 기술적인 부분 중 본인이 가장 최근에 배운 것을 선택해주세요.`
+  };
 
   const handleNextStep = () => {
     if (currentStep < steps.length) {
@@ -65,12 +68,26 @@ const LevelTestPage = () => {
   return (
     <>
       <PageTitle title={`수영 레벨 테스트 - ${strokenameKr}`} />
-      <PageInfoText content={contentForStep(currentStep)} />
-      {blankDiv}
+      {blankDiv5}
       <Steps key={currentStep} steps={[null, null, null]} currentStep={currentStep} />
+      {blankDiv3}
+      <PageInfoText content={contentForStep(currentStep)} />
+      <TestForm />
       <div className='mt-4 flex justify-between'>
-        <button onClick={handlePreviousStep} disabled={currentStep == 1} />
-        <button onClick={handleNextStep} disabled={currentStep == steps.length} />
+        {/* <button onClick={handlePreviousStep} disabled={currentStep == 1} />
+        <button onClick={handleNextStep} disabled={currentStep == steps.length} /> */}
+        <Button
+          key='prev'
+          path={handlePreviousStep}
+          content='이전'
+          type={currentStep == 1 ? 'disable' : 'default'}
+        />
+        <Button
+          key='next'
+          path={handleNextStep}
+          content='다음'
+          type={currentStep == steps.length ? 'disable' : 'default'}
+        />
       </div>
     </>
   );
