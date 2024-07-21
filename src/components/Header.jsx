@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { useHeaderContext } from '../context/HeaderContext.jsx';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from './UI/Logo.jsx';
 import PageTitle from './PageTitle.jsx';
@@ -12,7 +13,10 @@ function getHeaderType(type) {
   }[type];
 }
 
-const Header = ({ headerType }) => {
+const Header = (/*{ headerType }*/) => {
+  const { headerType } = useHeaderContext();
+  // console.log('Header type:', headerType);
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
@@ -27,7 +31,7 @@ const Header = ({ headerType }) => {
     navigate('/accounts/login');
   };
 
-  let headerClassName = 'sticky top-0 z-40 w-full h-14 p-1 flex flex-row justify-between items-center bg-white ';
+  let headerClassName = 'sticky fixed top-0 z-40 w-full h-14 p-1 flex flex-row justify-between items-center bg-white ';
   let logoContainerClassName = 'logo-container w-full h-full flex items-center p-5 max-w-[7rem]';
   let accountContainerClassName = 'account-container w-full max-w-32 p-3 flex flex-row justify-around text-xs';
   let accountContainerBtnClassName = 'w-full cursor-pointer hover:text-primary-500';

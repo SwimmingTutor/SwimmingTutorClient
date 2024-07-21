@@ -59,10 +59,10 @@ const Nav = ({ activePage }) => {
       <div className='dock-container container h-full w-full lg:w-app'>
         <nav
           className='
-                                dock-menu flex h-full w-full flex-row justify-around 
-                                gap-16 border-t-[0.1px] border-b-neutral-200 bg-white 
-                                px-4 pb-3 pt-4
-                                '
+            dock-menu flex h-full w-full flex-row justify-around 
+            gap-16 border-t-[0.1px] border-b-neutral-200 bg-white 
+            px-4 pb-3 pt-4
+        '
         >
           {NAV_ELEMENT_INFO.map(item => (
             <NavElement
