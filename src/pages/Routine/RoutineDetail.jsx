@@ -3,12 +3,15 @@ import { useParams } from 'react-router-dom';
 import SessionData from '../../components/Routine/SessionForm.jsx';
 import axios from '../../utils/https/axios/customAxios';
 import usePageSetup from '../../hooks/usePageSetup.js';
+import PageTitle from '../../components/PageTitle.jsx';
 
 const RoutineDetailPage = () => {
   const { routineNo } = useParams();
-  usePageSetup('routine-detail');
+  usePageSetup('routine-routineNo');
 
   const [trainings, setTrainings] = useState([]);
+
+  const blankDiv5 = <div className='h-5' />;
   
   const sessionName = ['워밍업', '코어', '쿨다운'];
   const warmupData = [];
@@ -51,6 +54,8 @@ const RoutineDetailPage = () => {
 
   return (
     <div>
+      <PageTitle title='루틴 상세' />
+      {blankDiv5}
       <SessionData key={sessionName[0]} title={sessionName[0]} data={warmupData} />
       <SessionData key={sessionName[1]} title={sessionName[1]} data={coreData} />
       <SessionData key={sessionName[2]} title={sessionName[2]} data={cooldownData} />

@@ -1,10 +1,12 @@
 import PageTitle from '../PageTitle.jsx';
 
-const blankDiv = <div className='h-7' />;
+const blankDiv3 = <div className='h-3' />;
+const blankDiv5 = <div className='h-5' />;
 const SessionData = ({ title, data }) => {
   return (
     <>
       <PageTitle title={title} />
+      {blankDiv3}
       <table className='min-w-full border border-gray-300 bg-white'>
         <thead>
           <tr>
@@ -32,7 +34,7 @@ const SessionData = ({ title, data }) => {
           )}
         </tbody>
       </table>
-      {blankDiv}
+      {blankDiv5}
     </>
   );
 };
