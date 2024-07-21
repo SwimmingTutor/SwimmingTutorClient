@@ -8,4 +8,34 @@ const customAxios = axios.create({
   }
 });
 
+customAxios.interceptors.response.use(
+  response => response,
+  async error => {
+    const originalRequest = error.config;
+
+    if (error.response.status === 403 && error.response.data.msg === 'Expired Token') {
+      const refreshToken = localStorage.getItem('refreshToken');
+
+      try {
+        const response = await axios.post('http://localhost:8080/auth/refresh', { token: refreshToken });
+        const { accessToken } = response.data;
+
+        localStorage.setItem('accessToken', accessToken);
+
+        api.defaults.headers['Authorization'] = `Bearer ${accessToken}`;
+        originalRequest.headers['Authorization'] = `Bearer ${accessToken}`;
+
+        return api(originalRequest);
+      } catch (err) {
+        console.error('Token refresh error:', err);
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        window.location.href = '/accounts/login';
+      }
+    }
+
+    return Promise.reject(error);
+  }
+);
+
 export default customAxios;

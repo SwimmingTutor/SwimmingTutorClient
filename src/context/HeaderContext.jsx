@@ -1,13 +1,19 @@
-import { createContext, useState } from 'react';
+import { createContext, useState, useContext } from 'react';
 
-export const HeaderContext = createContext();
+const HeaderContext = createContext();
 
-export const HeaderProvider = ({ children }) => {
+const HeaderProvider = ({ children }) => {
   const [headerType, setHeaderType] = useState('home');
 
-  const handleHeaderType = type => {
-    setHeaderType(type);
+  const handleHeaderType = page => {
+    setHeaderType(page);
   };
 
   return <HeaderContext.Provider value={{ headerType, handleHeaderType }}>{children}</HeaderContext.Provider>;
 };
+
+const useHeaderContext = () => {
+  return useContext(HeaderContext);
+};
+
+export { HeaderProvider, useHeaderContext };
