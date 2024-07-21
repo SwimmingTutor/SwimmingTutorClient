@@ -2,11 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import axios from '../../utils/https/axios/customAxios';
 import MyActiveIcon from '../../assets/icons/my-active.svg';
+import PageTitle from '../PageTitle.jsx';
 
 const ReportGraph = () => {
   const [data, setData] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [maxValues, setMaxValues] = useState({});
+
+  const images = ['lap_count.png', 'speed.png', 'heart_rate.png', 'carlory.png'];
+  const imagePaths = images.map(image => require(`../../assets/images/${image}`));
 
   useEffect(() => {
     const fetchData = async () => {
@@ -92,9 +96,11 @@ const ReportGraph = () => {
     }
   };
 
+  const blankDiv = <div className='h-7'></div>;
+
   return (
     <div style={{ width: '100%', height: 'auto', minHeight: '600px' }}>
-      <h1 style={{ fontSize: '1.5em', textAlign: 'center', marginBottom: '20px' }}>분석 보고서</h1>
+      <PageTitle title='분석 보고서' />
       <div style={{ marginBottom: '20px' }}>
         <label htmlFor='categorySelect'>카테고리 선택: </label>
         <select
@@ -130,13 +136,14 @@ const ReportGraph = () => {
           {renderLines()}
         </LineChart>
       </ResponsiveContainer>
-      <hr style={{ border: '1px solid gray', margin: '20px 0' }} />
-      <h1 style={{ fontSize: '1.5em', textAlign: 'center' }}>나의 기록</h1>
+      {/* <hr style={{ border: '1px solid gray', margin: '20px 0' }} /> */}
+      {blankDiv}
+      <PageTitle title='나의 기록' />
       <div style={{ display: 'flex', justifyContent: 'center', padding: '20px 0', textAlign: 'left' }}>
         <div>
-          {['랩 횟수', '속도', '심박수', '칼로리'].map(category => (
+          {['랩 횟수', '속도', '심박수', '칼로리'].map((category, index) => (
             <div key={category} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-              <img src={MyActiveIcon} alt={category} style={{ width: '20px', height: '20px', marginRight: '10px' }} />
+              <img src={imagePaths[index]} alt={category} style={{ width: '20px', height: '20px', marginRight: '10px' }} />
               <span>{category}</span>
             </div>
           ))}
