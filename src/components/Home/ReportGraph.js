@@ -15,11 +15,7 @@ const ReportGraph = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('/report', {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-          }
-        });
+        const response = await axios.get('/report');
 
         // 데이터 구조 변경 및 최대값 추출
         console.log(response.data);
@@ -143,7 +139,11 @@ const ReportGraph = () => {
         <div>
           {['랩 횟수', '속도', '심박수', '칼로리'].map((category, index) => (
             <div key={category} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-              <img src={imagePaths[index]} alt={category} style={{ width: '20px', height: '20px', marginRight: '10px' }} />
+              <img
+                src={imagePaths[index]}
+                alt={category}
+                style={{ width: '20px', height: '20px', marginRight: '10px' }}
+              />
               <span>{category}</span>
             </div>
           ))}
