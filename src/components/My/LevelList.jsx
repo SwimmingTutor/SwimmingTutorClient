@@ -3,7 +3,7 @@ import Menu from '../Menu.jsx';
 
 const levels = [
   {
-    key: 'freecrawl',
+    key: 'freestyle',
     name: '자유형',
     level: '-'
   },
