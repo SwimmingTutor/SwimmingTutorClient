@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import axios from '../../utils/https/axios/customAxios';
 import PageTitle from '../../components/PageTitle.jsx';
 import Steps from '../../components/UI/Steps.jsx';
 import PageInfoText from '../../components/PageInfoText.jsx';
@@ -9,54 +10,15 @@ import TestForm from '../../components/My/TestForm.jsx';
 
 const LevelTestPage = () => {
   const param = useParams();
-  // console.log(1, param);
   usePageSetup('level-test');
 
   const [currentStep, setCurrentStep] = useState(1);
-  
+  const [selectedValues, setSelectedValues] = useState([0]);
+  console.log('selectedValues:', selectedValues);
+
   const blankDiv3 = <div className='h-3'></div>;
   const blankDiv5 = <div className='h-5'></div>;
-  const steps = ['speed', 'distance', 'technique'];
-
-  const contentForStep = step => {
-    switch (step) {
-      case 1:
-        return pageDescriptions.speed;
-      case 2:
-        return pageDescriptions.distance;
-      case 3:
-        return pageDescriptions.technique;
-      default:
-        return '해당 단계 정보가 없습니다.';
-    }
-  };
-
-  const translateStrokeName = strokename => {
-    // console.log(2, strokename);
-    switch (strokename) {
-      case 'freecrawl':
-        return '자유형';
-      case 'backstroke':
-        return '배영';
-      case 'breathstroke':
-        return '평영';
-      case 'butterfly':
-        return '접영';
-    }
-  };
-  const strokenameKr = translateStrokeName(param.strokename);
-  
-  const pageDescriptions = {
-    speed: `${strokenameKr}으로 50m 완주 시 소요되는 시간을 선택해주세요.`,
-    distance: `50분 동안 ${strokenameKr}으로 완주할 수 있는 거리를 선택해주세요.`,
-    technique: `${strokenameKr} 기술적인 부분 중 본인이 가장 최근에 배운 것을 선택해주세요.`
-  };
-
-  const handleNextStep = () => {
-    if (currentStep < steps.length) {
-      setCurrentStep(currentStep + 1);
-    }
-  };
+  const steps = ['distance', 'speed', 'technique'];
 
   const handlePreviousStep = () => {
     if (currentStep > 1) {
@@ -64,30 +26,62 @@ const LevelTestPage = () => {
     }
   };
 
-  // TODO: 영법 및 테스트 주제별 설문내용 구현
+  const handleNextStep = async () => {
+    if (currentStep < steps.length) {
+      setCurrentStep(currentStep + 1);
+    } else {
+      // Request to the server with axios
+      try {
+        // TODO: 500 (Internal Server Error) 해결
+        // await axios.post(
+        //   '/level/log',
+        //   {
+        //     headers: {
+        //       Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+        //     },
+        //     style: param.strokename,
+        //     distance: selectedValues[0],
+        //     speed: selectedValues[1],
+        //     technique: selectedValues[2]
+        //   }
+        // );
+
+        // Redirect to /my/level page
+        window.location.href = '/my/level';
+      } catch (error) {
+        console.error('Error posting data:', error);
+      }
+    }
+  };
+
+  const handleOptionSelect = value => {
+    const updatedSelectedValues = [...selectedValues];
+    updatedSelectedValues[currentStep - 1] = value;
+    setSelectedValues(updatedSelectedValues);
+    console.log('updatedSelectedValues:', updatedSelectedValues);
+  };
+
   return (
     <>
-      <PageTitle title={`수영 레벨 테스트 - ${strokenameKr}`} />
+      <PageTitle title={`수영 레벨 테스트`} />
       {blankDiv5}
-      <Steps key={currentStep} steps={[null, null, null]} currentStep={currentStep} />
+      <Steps key={currentStep} steps={steps} currentStep={currentStep} />
       {blankDiv3}
-      <PageInfoText content={contentForStep(currentStep)} />
-      <TestForm />
+      <TestForm
+        strokename={param.strokename}
+        currentStep={currentStep}
+        onOptionSelect={handleOptionSelect}
+        selectedValues={selectedValues}
+      />
+      {blankDiv3}
       <div className='mt-4 flex justify-between'>
-        {/* <button onClick={handlePreviousStep} disabled={currentStep == 1} />
-        <button onClick={handleNextStep} disabled={currentStep == steps.length} /> */}
-        <Button
+        {/* <Button
           key='prev'
-          path={handlePreviousStep}
+          onClick={handlePreviousStep}
           content='이전'
-          type={currentStep == 1 ? 'disable' : 'default'}
-        />
-        <Button
-          key='next'
-          path={handleNextStep}
-          content='다음'
-          type={currentStep == steps.length ? 'disable' : 'default'}
-        />
+          type={currentStep === 1 ? 'disable' : 'default'}
+        /> */}
+        <Button key='next' onClick={handleNextStep} content={currentStep === steps.length ? '결과확인' : '다음'} />
       </div>
     </>
   );
