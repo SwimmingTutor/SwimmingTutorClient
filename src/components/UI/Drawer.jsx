@@ -45,3 +45,5 @@ const Drawer = forwardRef(({ children, title }, ref) => {
     document.getElementById('drawer-root')
   );
 });
+
+export default Drawer;

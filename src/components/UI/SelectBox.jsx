@@ -1,7 +1,7 @@
 import SelectOption from './SelectOption.jsx';
 import { useState } from 'react';
 import { Label, Listbox, ListboxButton, ListboxOptions } from '@headlessui/react';
-import { ChevronUpDownIcon } from '@heroicons/react/20/solid';
+import { ChevronDownIcon } from '@heroicons/react/20/solid';
 
 const SelectBox = ({
   label = 'label',
@@ -29,7 +29,7 @@ const SelectBox = ({
                 <span className='ml-3 block truncate text-zinc-700'>{selected}</span>
               </span>
               <span className='pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2'>
-                <ChevronUpDownIcon className='h-5 w-5' aria-hidden='true' />
+                <ChevronDownIcon className='h-5 w-5' aria-hidden='true' />
               </span>
             </ListboxButton>
 
