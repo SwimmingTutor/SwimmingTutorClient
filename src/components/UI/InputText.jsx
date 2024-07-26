@@ -3,7 +3,8 @@ const InputText = ({
   type = 'text',
   label = 'label',
   placeholder = 'placeholder',
-  defaultValue = undefined
+  defaultValue = undefined,
+  onChange
 }) => {
   // TODO: default 제거
   return (
@@ -18,7 +19,8 @@ const InputText = ({
           id={label}
           autoComplete={label}
           placeholder={placeholder}
-          defaultValue={defaultValue && defaultValue}
+          defaultValue={defaultValue}
+          onChange={onChange}
           className='block w-full rounded-md border-0 px-3 py-1.5 text-zinc-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:italic placeholder:text-zinc-300 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6'
         />
       </div>
