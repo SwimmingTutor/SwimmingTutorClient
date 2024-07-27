@@ -37,19 +37,29 @@ const LevelTestPage = () => {
     }
     // Request to the server with axios
     try {
-      // TODO: 500 (Internal Server Error) 해결
-      // await axios.post(
-      //   '/level/log',
-      //   {
-      //     headers: {
-      //       Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-      //     },
-      //     style: param.strokename,
-      //     distance: selectedValues[0],
-      //     speed: selectedValues[1],
-      //     technique: selectedValues[2]
-      //   }
-      // );
+      const strokeNameMap = {
+        freestyle: '자유형',
+        backstroke: '배영',
+        breathstroke: '평영',
+        butterfly: '접영'
+      };
+
+      const strokeName = strokeNameMap[param.strokename];
+
+      console.log(strokeName, selectedValues[0], selectedValues[1], selectedValues[2]);
+
+      await axios.post(
+        '/level/log',
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+          },
+          style: strokeName,
+          distance: selectedValues[0],
+          speed: selectedValues[1],
+          technique: selectedValues[2]
+        }
+      );
 
       // Redirect to /my/level page
       window.location.href = '/my/level';
