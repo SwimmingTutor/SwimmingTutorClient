@@ -27,30 +27,34 @@ const LevelTestPage = () => {
   };
 
   const handleNextStep = async () => {
+    if (selectedValues[currentStep - 1] == 0 || selectedValues[currentStep - 1] == undefined) {
+      alert('값을 선택해주세요 😅');
+      return;
+    }
     if (currentStep < steps.length) {
       setCurrentStep(currentStep + 1);
-    } else {
-      // Request to the server with axios
-      try {
-        // TODO: 500 (Internal Server Error) 해결
-        // await axios.post(
-        //   '/level/log',
-        //   {
-        //     headers: {
-        //       Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-        //     },
-        //     style: param.strokename,
-        //     distance: selectedValues[0],
-        //     speed: selectedValues[1],
-        //     technique: selectedValues[2]
-        //   }
-        // );
+      return;
+    }
+    // Request to the server with axios
+    try {
+      // TODO: 500 (Internal Server Error) 해결
+      // await axios.post(
+      //   '/level/log',
+      //   {
+      //     headers: {
+      //       Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+      //     },
+      //     style: param.strokename,
+      //     distance: selectedValues[0],
+      //     speed: selectedValues[1],
+      //     technique: selectedValues[2]
+      //   }
+      // );
 
-        // Redirect to /my/level page
-        window.location.href = '/my/level';
-      } catch (error) {
-        console.error('Error posting data:', error);
-      }
+      // Redirect to /my/level page
+      window.location.href = '/my/level';
+    } catch (error) {
+      console.error('Error posting data:', error);
     }
   };
 
