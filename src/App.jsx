@@ -90,6 +90,14 @@ const router = createBrowserRouter([
             element: <MyPage />
           },
           {
+            path: 'profile',
+            element: <ProfilePage />
+          },
+          {
+            path: 'experience',
+            element: <ExperiencePage />
+          },
+          {
             path: 'level',
             element: <MyLevelPage />
           },

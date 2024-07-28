@@ -15,7 +15,7 @@ export const LoginRedirectPage = () => {
   // TODO: 로그인 완료 시 리다이렉트
   const navigate = useNavigate();
   useEffect(() => {
-    navigate('/');
+    navigate('/profile');
   });
   // Cookies.remove('refreshToken');
   // Cookies.remove('accessToken');

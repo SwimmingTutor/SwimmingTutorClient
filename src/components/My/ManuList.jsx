@@ -7,11 +7,11 @@ const MANU_ELEMENT_INFO = [
     },
     {
         name: "프로필 설정",
-        path: "",
+        path: "profile",
     },
     {
         name: "수영 경험 설정",
-        path: "",
+        path: "experience",
     },
     {
         name: "내 수영 레벨",

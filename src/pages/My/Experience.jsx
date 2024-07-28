@@ -3,6 +3,7 @@ import OAuthHeader from '../../components/OAuthHeader.jsx';
 import Button from '../../components/UI/Button.jsx';
 import SelectBox from '../../components/UI/SelectBox.jsx';
 import Nav from '../../components/Nav.jsx';
+import usePageSetup from '../../hooks/usePageSetup.js';
 
 const onClick = () => {};
 
@@ -11,6 +12,7 @@ const purposeOptions = ['다이어트', '근력 강화', '건강 증진', '재�
 
 // TODO: 로그인시 헤더 '로그아웃' 노출
 const ExperiencePage = () => {
+  usePageSetup('experience');
   const handleStrokeChange = value => {
     console.log('Selected Stroke:', value);
   };

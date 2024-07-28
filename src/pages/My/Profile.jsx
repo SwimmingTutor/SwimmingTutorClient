@@ -6,11 +6,13 @@ import ModalDeleteAccount from '../../components/UI/ModalDeleteAccount.jsx';
 import InputText from '../../components/UI/InputText.jsx';
 import GenderRadio from '../../components/OAuth/GenderRadio.jsx';
 import Nav from '../../components/Nav.jsx';
+import usePageSetup from '../../hooks/usePageSetup.js';
 
 const onClick = () => {};
 
 // TODO: 로그인시 헤더 '로그아웃' 노출
 const ProfilePage = () => {
+  usePageSetup('profie');
   const deleteAccountModalRef = useRef();
 
   const handleOpenAccountModal = () => {
