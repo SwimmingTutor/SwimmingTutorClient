@@ -8,6 +8,7 @@ const LevelList = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // console.log('1 levels: ', levels);
   const fetchData = useCallback(async () => {
     try {
       const response = await axios.get('/level', {
@@ -16,13 +17,16 @@ const LevelList = () => {
         }
       });
       const data = response.data;
+      // console.log('data: ', data);
 
-      setLevels(prevLevels =>
-        prevLevels.map(level => ({
-          ...level,
-          level: data[level.key] || '-'
-        }))
-      );
+      setLevels(prevLevels => prevLevels.map(level => {
+        const matchingData = data.find(item => item.lcTrainingName === level.name);
+        if (matchingData) {
+          return { ...level, level: matchingData.userLevel };
+        }
+        return level;
+      }));
+      // console.log('2 levels: ', levels);
     } catch (err) {
       setError('Failed to fetch levels. Please try again.');
     } finally {
