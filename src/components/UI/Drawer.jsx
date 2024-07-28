@@ -2,42 +2,48 @@ import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 const Drawer = forwardRef(({ children, title }, ref) => {
-    let [isDrawerOpen, setIsDrawerOpen] = useState(false);
-    const toggleDrawer = () => {
-        setIsDrawerOpen((prevState) => !prevState);
-      };
+  let [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const toggleDrawer = () => {
+    setIsDrawerOpen(prevState => !prevState);
+  };
 
-    useImperativeHandle(ref, ()=>{
-        return {
-            draw(){
-                toggleDrawer();
-            }
-        }
-    })
-    return createPortal(
-        (<div className="relative">
-            <div
-                className={`fixed bottom-0 left-0 w-full h-fit min-h-60 max-h-60 bg-transparent shadow-lg z-[60] transition-transform duration-400 ${isDrawerOpen ? 'transform translate-y-0' : 'transform translate-y-full'
-                    }`}
-            >
-                <div className="container relative w-app h-full 
-                                flex flex-col justify-start
-                                rounded-t-lg shadow-lg">
-                    <div className='sticky top-0 
-                                        w-app h-full px-4 py-3 bg-white rounded-t-lg
-                                        text-center text-base font-semibold text-primary'>{title}</div>
-                    {/* Drawer content */}
-                    {children}
+  useImperativeHandle(ref, () => {
+    return {
+      draw() {
+        toggleDrawer();
+      }
+    };
+  });
+  return createPortal(
+    <div className='relative'>
+      <div
+        className={`duration-400 fixed bottom-0 left-0 z-[60] h-fit max-h-60 min-h-60 w-full bg-transparent shadow-lg transition-transform ${
+          isDrawerOpen ? 'translate-y-0 transform' : 'translate-y-full transform'
+        }`}
+      >
+        <div
+          className='container relative flex h-full w-1/3 
+                                flex-col justify-start rounded-t-lg
+                                shadow-lg lg:w-app'
+        >
+          <div
+            className='sticky top-0 
+                                        h-full w-1/3 rounded-t-lg bg-white px-4 py-3 text-center
+                                        text-base font-semibold text-primary lg:w-app'
+          >
+            {title}
+          </div>
+          {/* Drawer content */}
+          {children}
+        </div>
+      </div>
 
-                </div>
-            </div>
-
-            {isDrawerOpen && (
-                <div
-                    className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50"
-                    onClick={toggleDrawer}
-                />
-            )}
-        </div>), document.getElementById('drawer-root')
-    );
+      {isDrawerOpen && (
+        <div className='fixed left-0 top-0 z-50 h-full w-full bg-black bg-opacity-50' onClick={toggleDrawer} />
+      )}
+    </div>,
+    document.getElementById('drawer-root')
+  );
 });
+
+export default Drawer;
