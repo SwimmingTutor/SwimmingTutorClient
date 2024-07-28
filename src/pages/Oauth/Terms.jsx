@@ -1,6 +1,5 @@
 import TermsAgreement from '../../components/OAuth/TermsAgreement.jsx';
-import CenterWrapper from '../../components/Layout/CenterWrapper.jsx';
-import Header from '../../components/Header.jsx';
+import OAuthHeader from '../../components/OAuthHeader.jsx';
 import Button from '../../components/UI/Button.jsx';
 
 const TermsPage = () => {
@@ -9,13 +8,14 @@ const TermsPage = () => {
   const onClick = () => {};
 
   return (
-    <CenterWrapper>
-      <Header headerType='terms' />
+    <>
+      <OAuthHeader headerType='terms' off='true' />
       {blankDiv}
       <TermsAgreement></TermsAgreement>
       {blankDiv}
       <Button content='동의하고 시작하기' onClick={onClick}></Button>
-    </CenterWrapper>
+    </>
   );
 };
+
 export default TermsPage;

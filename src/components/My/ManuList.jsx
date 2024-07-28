@@ -15,14 +15,13 @@ const MANU_ELEMENT_INFO = [
     },
     {
         name: "내 수영 레벨",
-        path: "",
+        path: "level",
     },
 ];
 const MenuList = () => {
     return (
         <div className="w-full h-fit flex flex-col gap-3 text-[0.9rem] font-light">
             {
-
                 MANU_ELEMENT_INFO.map((item) => 
                     <Menu key={item.name} name={item.name} path={item.path}/>
                 )
