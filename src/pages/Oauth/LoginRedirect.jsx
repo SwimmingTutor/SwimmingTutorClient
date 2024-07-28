@@ -4,23 +4,32 @@ import { useNavigate, redirectDocument, redirect } from 'react-router-dom';
 // import { useNavigate, redirectDocument, redirect } from 'react-router-null;
 
 export const LoginRedirectPage = () => {
+  const navigate = useNavigate();
+
   const accessToken = Cookies.get('accessToken');
   const refreshToken = Cookies.get('refreshToken');
-  
+
   localStorage.setItem('accessToken', accessToken);
   localStorage.setItem('refreshToken', refreshToken);
-  
-  // console.log(accessToken);
-  // console.log(refreshToken);
-  // TODO: 로그인 완료 시 리다이렉트
-  const navigate = useNavigate();
+  Cookies.remove('refreshToken');
+  Cookies.remove('accessToken');
+
+  const registered = Cookies.get('registered');
+
+  if (registered === 'false') {
+    localStorage.setItem('registered', false);
+
+    return useEffect(() => {
+      navigate('/my/profile', { state: { from: '/login' } });
+    });
+  }
+
+  Cookies.remove('registered');
+
   useEffect(() => {
-    navigate('/my/profile', { state: { from: '/login' } });
+    navigate('/', { state: { from: '/login' } });
   });
-  // Cookies.remove('refreshToken');
-  // Cookies.remove('accessToken');
-  
-  // return redirect('/');
+
   return null;
 };
 export default LoginRedirectPage;

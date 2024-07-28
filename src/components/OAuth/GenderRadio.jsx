@@ -14,12 +14,12 @@ const GenderRadio = ({ label = 'label' }) => {
             id='male'
             name='gender'
             type='radio'
-            value='male'
-            checked={selectedGender === 'male'}
+            value='M'
+            checked={selectedGender === 'M'}
             onChange={e => setSelectedGender(e.target.value)}
             className='form-radio h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500'
           />
-          <label htmlFor='male' className='ml-2 text-sm font-medium text-gray-700'>
+          <label htmlFor='M' className='ml-2 text-sm font-medium text-gray-700'>
             남성
           </label>
         </div>
@@ -28,12 +28,12 @@ const GenderRadio = ({ label = 'label' }) => {
             id='female'
             name='gender'
             type='radio'
-            value='female'
-            checked={selectedGender === 'female'}
+            value='F'
+            checked={selectedGender === 'F'}
             onChange={e => setSelectedGender(e.target.value)}
             className='form-radio h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500'
           />
-          <label htmlFor='female' className='ml-2 text-sm font-medium text-gray-700'>
+          <label htmlFor='F' className='ml-2 text-sm font-medium text-gray-700'>
             여성
           </label>
         </div>

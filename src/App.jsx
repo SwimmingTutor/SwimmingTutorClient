@@ -30,6 +30,8 @@ import LoginRedirectPage from './pages/Oauth/LoginRedirect.jsx';
 import JoinPage from './pages/Oauth/Join.jsx';
 import TermsPage from './pages/Oauth/Terms.jsx';
 
+import RegisterPage from './pages/Register/Index.jsx';
+import { action as signupAction } from './pages/Register/Index.jsx';
 const router = createBrowserRouter([
   {
     /// default page layout
@@ -137,7 +139,8 @@ const router = createBrowserRouter([
       },
       {
         path: 'profile',
-        element: <ProfilePage />
+        element: <RegisterPage />,
+        action: signupAction
       },
       {
         path: 'experience',
