@@ -1,4 +1,5 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import CenterWrapper from '../../components/Layout/CenterWrapper.jsx';
 import OAuthHeader from '../../components/OAuthHeader.jsx';
 import Button from '../../components/UI/Button.jsx';
@@ -8,12 +9,22 @@ import GenderRadio from '../../components/OAuth/GenderRadio.jsx';
 import Nav from '../../components/Nav.jsx';
 import usePageSetup from '../../hooks/usePageSetup.js';
 
-const onClick = () => {};
-
 // TODO: 로그인시 헤더 '로그아웃' 노출
 const ProfilePage = () => {
-  usePageSetup('profie');
+  usePageSetup('profile');
   const deleteAccountModalRef = useRef();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const onClick = () => {
+    const fromPage = location.state?.from;
+    // TODO: Redirect to Experience page
+    if (fromPage === '/login') {
+      navigate('/my/experience', { state: { from: '/profile' } });
+    } else {
+      alert('반영이 완료되었습니다.');
+    }
+  };
 
   const handleOpenAccountModal = () => {
     deleteAccountModalRef.current.open();
@@ -21,13 +32,12 @@ const ProfilePage = () => {
 
   const blankDiv1 = <div className='h-7'></div>;
   const blankDiv2 = <div className='h-14'></div>;
-  const blankDiv3 = <div className='h-20'></div>;
 
   return (
     <>
       <OAuthHeader headerType='profile' off='true' />
       <div className='px-7'>
-        {blankDiv2}
+        {/* {blankDiv2} */}
         <InputText label='닉네임' placeholder='닉네임' />
         {blankDiv1}
         {/* TODO: 성별 - select box로 변경 */}
