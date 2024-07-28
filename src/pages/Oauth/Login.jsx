@@ -5,8 +5,14 @@ import CenterWrapper from '../../components/Layout/CenterWrapper.jsx';
 import logo from '../../assets/images/g-logo.png';
 
 const onGoogleLogin = () => {
-  window.location.href = 'http://localhost:8080/oauth2/authorization/google';
+  const apiUrl = process.env.REACT_APP_API_URL;
+  if (!apiUrl) {
+    console.error('API URL이 설정되지 않았습니다.');
+    return;
+  }
+  window.location.href = `${apiUrl}/oauth2/authorization/google`;
 };
+
 
 const getData = async () => {
   await axios

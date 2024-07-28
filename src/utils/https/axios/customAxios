@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const baseURL = 'http://localhost:8080';
+const baseURL = process.env.REACT_APP_API_URL;
 
 const refreshAccessToken = async () => {
   const oldAccessToken = localStorage.getItem('accessToken');
