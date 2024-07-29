@@ -20,7 +20,7 @@ export const LoginRedirectPage = () => {
     localStorage.setItem('registered', false);
 
     return useEffect(() => {
-      navigate('/my/profile', { state: { from: '/login' } });
+      navigate('/accounts/register', { state: { from: '/login' } });
     });
   }
 

@@ -138,7 +138,7 @@ const router = createBrowserRouter([
         element: <TermsPage />
       },
       {
-        path: 'profile',
+        path: 'register',
         element: <RegisterPage />,
         action: signupAction
       },
