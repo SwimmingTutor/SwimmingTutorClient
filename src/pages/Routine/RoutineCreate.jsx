@@ -1,11 +1,11 @@
+import { useState } from 'react';
 import PageTitle from '../../components/PageTitle.jsx';
 import SelectBox from '../../components/UI/SelectBox.jsx';
 import InputNumber from '../../components/Routine/InputNumber.jsx';
 import MultiSelectBox from '../../components/UI/MultiSelectBox.jsx';
 import InputText from '../../components/UI/InputText.jsx'; // InputText 컴포넌트 추가
 import Button from '../../components/UI/Button.jsx';
-import { useState } from 'react';
-import axios from 'axios';
+import axios from '../../utils/https/axios/customAxios';
 
 const RoutineCreatePage = () => {
   const [routineName, setRoutineName] = useState(''); // 루틴 이름 상태 추가
@@ -19,22 +19,27 @@ const RoutineCreatePage = () => {
       return;
     }
 
-    if (strokes.length === 0) {
+    if (strokes.length == 0) {
       alert('훈련할 영법을 선택해주세요 😅');
       return;
     }
     // Request to the server with axios
     try {
       // TODO: 404 (Not Found Error) 해결
-      // await axios.post('/routine', {
-      //   headers: {
-      //     Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-      //   },
-      //   routineName: routineName,
-      //   poolLength: poolLength,
-      //   targetDistance: targetDistance,
-      //   selStrokes: strokes
-      // });
+      await axios.post(
+        '/routine',
+        {
+          routineName: routineName,
+          poolLength: poolLength,
+          targetDistance: targetDistance,
+          selStrokes: strokes
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+          }
+        }
+      );
 
       // Redirect to /routine page
       window.location.href = '/routine';
