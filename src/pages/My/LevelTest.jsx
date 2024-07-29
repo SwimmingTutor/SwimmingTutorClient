@@ -7,6 +7,7 @@ import PageInfoText from '../../components/PageInfoText.jsx';
 import usePageSetup from '../../hooks/usePageSetup.js';
 import Button from '../../components/UI/Button.jsx';
 import TestForm from '../../components/My/TestForm.jsx';
+import SWIMTERMS from '../../constants/swimTerms.js';
 
 const LevelTestPage = () => {
   const param = useParams();
@@ -37,16 +38,7 @@ const LevelTestPage = () => {
     }
     // Request to the server with axios
     try {
-      const strokeNameMap = {
-        freestyle: '자유형',
-        backstroke: '배영',
-        breathstroke: '평영',
-        butterfly: '접영'
-      };
-
-      const strokeName = strokeNameMap[param.strokename];
-
-      console.log(strokeName, selectedValues[0], selectedValues[1], selectedValues[2]);
+      const strokeNames = SWIMTERMS;
 
       await axios.post(
         '/level/log',
@@ -54,7 +46,7 @@ const LevelTestPage = () => {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`
           },
-          style: strokeName,
+          style: strokeNames.name,
           distance: selectedValues[0],
           speed: selectedValues[1],
           technique: selectedValues[2]
