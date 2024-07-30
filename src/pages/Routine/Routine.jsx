@@ -20,13 +20,6 @@ const RoutinePage = () => {
       }
     };
     fetchData();
-
-    // Cleanup function to cancel the request if the component unmounts
-    return () => {
-      // axios.CancelToken API를 사용하여 요청을 취소하는 방법
-      const source = axios.CancelToken.source();
-      source.cancel('Component unmounted, request canceled');
-    };
   }, []);
 
   if (error) {
