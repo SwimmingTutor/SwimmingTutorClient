@@ -6,8 +6,8 @@ import usePageSetup from '../../hooks/usePageSetup.js';
 import PageTitle from '../../components/PageTitle.jsx';
 
 const RoutineDetailPage = () => {
-  const { routineNo } = useParams();
   usePageSetup('routine-routineNo');
+  const { routineNo } = useParams();
 
   const [trainings, setTrainings] = useState([]);
 
@@ -21,11 +21,7 @@ const RoutineDetailPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`/routine/${routineNo}`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-          }
-        });
+        const response = await axios.get(`/routine/${routineNo}`);
         setTrainings(response.data);
       } catch (error) {
         console.error(error);
