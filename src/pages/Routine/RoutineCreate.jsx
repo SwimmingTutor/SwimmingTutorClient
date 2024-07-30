@@ -1,17 +1,39 @@
+import { useState } from 'react';
 import PageTitle from '../../components/PageTitle.jsx';
 import SelectBox from '../../components/UI/SelectBox.jsx';
 import InputNumber from '../../components/Routine/InputNumber.jsx';
 import MultiSelectBox from '../../components/UI/MultiSelectBox.jsx';
-import InputText from '../../components/UI/InputText.jsx'; // InputText 컴포넌트 추가
+import InputText from '../../components/UI/InputText.jsx';
 import Button from '../../components/UI/Button.jsx';
-import { useState } from 'react';
-import axios from 'axios';
+import axios from '../../utils/https/axios/customAxios';
 
 const RoutineCreatePage = () => {
-  const [routineName, setRoutineName] = useState(''); // 루틴 이름 상태 추가
-  const [targetDistance, setTargetDistance] = useState(1000); // 상태 추가
+  const [routineName, setRoutineName] = useState('');
+  const [targetDistance, setTargetDistance] = useState(1000);
   const [poolLength, setPoolLength] = useState('25m');
   const [strokes, setStrokes] = useState([]);
+
+  const handleRoutineName = value => {
+    setRoutineName(value);
+    // console.log('routineName:', value);
+  };
+
+  const handlePoolLength = value => {
+    // 문자열 'm' 제거
+    setPoolLength(value.replace('m', ''));
+    // console.log('poolLength:', value);
+  };
+
+  const handleDistance = value => {
+    setTargetDistance(value);
+    // console.log('targetDistance:', value);
+  };
+
+  const handleStrokes = selectedStrokes => {
+    // 배열을 콤마로 구분된 문자열로 변환
+    setStrokes(selectedStrokes.join(','));
+    // console.log('strokes:', selectedStrokes);
+  };
 
   const onClick = async () => {
     if (!routineName) {
@@ -19,22 +41,21 @@ const RoutineCreatePage = () => {
       return;
     }
 
-    if (strokes.length === 0) {
+    if (strokes.length == 0) {
       alert('훈련할 영법을 선택해주세요 😅');
       return;
     }
     // Request to the server with axios
     try {
-      // TODO: 404 (Not Found Error) 해결
-      // await axios.post('/routine', {
-      //   headers: {
-      //     Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-      //   },
-      //   routineName: routineName,
-      //   poolLength: poolLength,
-      //   targetDistance: targetDistance,
-      //   selStrokes: strokes
-      // });
+      await axios.post(
+        '/routine',
+        {
+          routineName: routineName,
+          poolLength: poolLength,
+          targetDistance: targetDistance,
+          selStrokes: strokes
+        }
+      );
 
       // Redirect to /routine page
       window.location.href = '/routine';
@@ -50,24 +71,20 @@ const RoutineCreatePage = () => {
         label='루틴 이름'
         placeholder='루틴 이름을 입력하세요'
         defaultValue={routineName}
-        onChange={e => setRoutineName(e.target.value)} // 루틴 이름 상태 업데이트
+        onChange={handleRoutineName}
       />
       <SelectBox
         label='레인 길이'
         selectOption={['25m', '50m']}
-        onChange={value => setPoolLength(value)} // 상태 업데이트
+        defaultValue={poolLength}
+        onChange={handlePoolLength}
       />
-      <InputNumber
-        label='목표 거리'
-        defaultValue={1000}
-        unit={100}
-        onChange={value => setTargetDistance(value)} // 상태 업데이트
-      />
+      <InputNumber label='목표 거리' unit={100} defaultValue={targetDistance} onChange={handleDistance} />
       <MultiSelectBox
         label='영법 선택'
         selectOption={['자유형', '배영', '평영', '접영']}
         placeholder='훈련할 영법을 선택하세요'
-        onChange={value => setStrokes(value)} // 상태 업데이트
+        onChange={handleStrokes}
       />
       <Button key='create' content='생성하기' size='fit' onClick={onClick} />
     </>

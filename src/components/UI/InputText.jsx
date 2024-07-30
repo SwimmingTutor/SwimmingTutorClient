@@ -1,12 +1,28 @@
-// label 도 같이
+import { useEffect, useState } from "react";
+
 const InputText = ({
   name,
   type = 'text',
   label = 'label',
   placeholder = 'placeholder',
-  defaultValue = undefined,
+  defaultValue = '',
   onChange
 }) => {
+  const [internalValue, setInternalValue] = useState(defaultValue);
+
+  useEffect(() => {
+    setInternalValue(defaultValue);
+  }, [defaultValue]);
+
+  const handleChange = (event) => {
+    const value = event.target.value;
+    setInternalValue(value);
+  };
+
+  const handleBlur = () => {
+    onChange(internalValue);
+  }
+
   // TODO: default 제거
   return (
     <div className='col-span-full'>
@@ -20,8 +36,9 @@ const InputText = ({
           id={label}
           autoComplete={label}
           placeholder={placeholder}
-          defaultValue={defaultValue}
-          onChange={onChange}
+          value={internalValue}
+          onChange={handleChange}
+          onBlur={handleBlur}
           className='block w-full rounded-md border-0 px-3 py-1.5 text-zinc-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:italic placeholder:text-zinc-300 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6'
         />
       </div>
