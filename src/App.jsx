@@ -29,6 +29,7 @@ import LoginPage from './pages/Oauth/Login.jsx';
 import LoginRedirectPage from './pages/Oauth/LoginRedirect.jsx';
 import JoinPage from './pages/Oauth/Join.jsx';
 import TermsPage from './pages/Oauth/Terms.jsx';
+import RoutineUpdatePage from './pages/Routine/RoutineUpdate.jsx';
 
 const router = createBrowserRouter([
   {
@@ -77,6 +78,10 @@ const router = createBrowserRouter([
           {
             path: 'create',
             element: <RoutineCreatePage />
+          },
+          {
+            path: 'update',
+            element: <RoutineUpdatePage />
           }
         ]
       },

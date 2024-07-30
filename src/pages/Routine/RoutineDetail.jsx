@@ -54,6 +54,7 @@ const RoutineDetailPage = () => {
     },
     []
   );
+  
   const handleDelete = async () => {
     // Request to the server with axios
     try {
@@ -68,7 +69,15 @@ const RoutineDetailPage = () => {
   const handleUpdate = async () => {
     // Request to the server with axios
     try {
-      navigate(`/routine/update/${routineNo}`);
+      navigate('/routine/update', {
+        state: {
+          routineNo: routineNo,
+          routineName: routineInfo.routineName,
+          poolLength: routineInfo.poolLength,
+          targetDistance: routineInfo.targetDistance,
+          selStrokes: routineInfo.selStrokes
+        }
+      });
     } catch (error) {
       console.error('Error posting data:', error);
     }
@@ -95,15 +104,15 @@ const RoutineDetailPage = () => {
         </tbody>
       </table>
       {blankDiv5}
+      <div className='mt-4 flex justify-between'>
+        <Button key='delete' onClick={handleDelete} content='삭제' type='cancel' />
+        <Button key='update' onClick={handleUpdate} content='수정' />
+      </div>
+      {blankDiv10}
       <div className='grid gap-4'>
         {sessionName.map((name, index) => (
           <SessionData key={name} title={name} data={categorizedData[index]} />
         ))}
-      </div>
-      {blankDiv10}
-      <div className='mt-4 flex justify-between'>
-        <Button key='delete' onClick={handleDelete} content='삭제' type='cancel' />
-        <Button key='update' onClick={handleUpdate} content='수정' />
       </div>
     </div>
   );
