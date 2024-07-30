@@ -54,4 +54,4 @@ const GoogleLoginButton = () => {
 //   );
 // };
 
-default GoogleLoginButton;
+export default GoogleLoginButton;
