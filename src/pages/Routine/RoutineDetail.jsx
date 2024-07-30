@@ -65,10 +65,10 @@ const RoutineDetailPage = () => {
     }
   };
 
-  const handleEdit = async () => {
+  const handleUpdate = async () => {
     // Request to the server with axios
     try {
-      navigate(`/routine/edit/${routineNo}`);
+      navigate(`/routine/update/${routineNo}`);
     } catch (error) {
       console.error('Error posting data:', error);
     }
@@ -99,6 +99,11 @@ const RoutineDetailPage = () => {
         {sessionName.map((name, index) => (
           <SessionData key={name} title={name} data={categorizedData[index]} />
         ))}
+      </div>
+      {blankDiv10}
+      <div className='mt-4 flex justify-between'>
+        <Button key='delete' onClick={handleDelete} content='삭제' type='cancel' />
+        <Button key='update' onClick={handleUpdate} content='수정' />
       </div>
     </div>
   );
