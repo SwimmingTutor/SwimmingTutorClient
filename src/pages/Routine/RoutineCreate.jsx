@@ -19,7 +19,8 @@ const RoutineCreatePage = () => {
   };
 
   const handlePoolLength = value => {
-    setPoolLength(value);
+    // 문자열 'm' 제거
+    setPoolLength(value.replace('m', ''));
     // console.log('poolLength:', value);
   };
 
@@ -29,7 +30,8 @@ const RoutineCreatePage = () => {
   };
 
   const handleStrokes = selectedStrokes => {
-    setStrokes(selectedStrokes);
+    // 배열을 콤마로 구분된 문자열로 변환
+    setStrokes(selectedStrokes.join(','));
     // console.log('strokes:', selectedStrokes);
   };
 
@@ -51,10 +53,7 @@ const RoutineCreatePage = () => {
           routineName: routineName,
           poolLength: poolLength,
           targetDistance: targetDistance,
-          selStrokes: strokes,
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-          }
+          selStrokes: strokes
         }
       );
 
