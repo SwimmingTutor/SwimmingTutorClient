@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import axios from '../../utils/https/axios/customAxios';
 import PageTitle from '../../components/PageTitle.jsx';
 import Steps from '../../components/UI/Steps.jsx';
-import PageInfoText from '../../components/PageInfoText.jsx';
 import usePageSetup from '../../hooks/usePageSetup.js';
 import Button from '../../components/UI/Button.jsx';
 import TestForm from '../../components/My/TestForm.jsx';
@@ -15,7 +14,7 @@ const LevelTestPage = () => {
 
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedValues, setSelectedValues] = useState([0, 0, 0]);
-  console.log('selectedValues:', selectedValues);
+  // console.log('selectedValues:', selectedValues);
 
   const blankDiv3 = <div className='h-3'></div>;
   const blankDiv5 = <div className='h-5'></div>;
@@ -43,11 +42,6 @@ const LevelTestPage = () => {
 
       await axios.post(
         '/level/log',
-        // {
-        //   headers: {
-        //     Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-        //   }
-        // },
         {
           style: strokeName,
           distance: selectedValues[0],
@@ -67,7 +61,7 @@ const LevelTestPage = () => {
     const updatedSelectedValues = [...selectedValues];
     updatedSelectedValues[currentStep - 1] = value;
     setSelectedValues(updatedSelectedValues);
-    console.log('updatedSelectedValues:', updatedSelectedValues);
+    // console.log('updatedSelectedValues:', updatedSelectedValues);
   };
 
   return (
