@@ -1,5 +1,6 @@
 // label 도 같이
 const InputText = ({
+  name,
   type = 'text',
   label = 'label',
   placeholder = 'placeholder',
@@ -15,7 +16,7 @@ const InputText = ({
       <div className='mt-2'>
         <input
           type={type}
-          name={label}
+          name={name}
           id={label}
           autoComplete={label}
           placeholder={placeholder}
