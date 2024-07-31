@@ -15,6 +15,7 @@ import RoutineContainer from './containers/RoutineContainer.jsx';
 import RoutinePage from './pages/Routine/Routine.jsx';
 import RoutineDetailPage from './pages/Routine/RoutineDetail.jsx';
 import RoutineCreatePage from './pages/Routine/RoutineCreate.jsx';
+import RoutineUpdatePage from './pages/Routine/RoutineUpdate.jsx';
 
 import MyContainer from './containers/MyContainer.jsx';
 import MyPage from './pages/My/My.jsx';
@@ -29,8 +30,9 @@ import LoginPage from './pages/Oauth/Login.jsx';
 import LoginRedirectPage from './pages/Oauth/LoginRedirect.jsx';
 import JoinPage from './pages/Oauth/Join.jsx';
 import TermsPage from './pages/Oauth/Terms.jsx';
-import RoutineUpdatePage from './pages/Routine/RoutineUpdate.jsx';
 
+import RegisterPage from './pages/Register/Index.jsx';
+import { action as signupAction } from './pages/Register/Index.jsx';
 const router = createBrowserRouter([
   {
     /// default page layout
@@ -141,8 +143,9 @@ const router = createBrowserRouter([
         element: <TermsPage />
       },
       {
-        path: 'profile',
-        element: <ProfilePage />
+        path: 'register',
+        element: <RegisterPage />,
+        action: signupAction
       },
       {
         path: 'experience',

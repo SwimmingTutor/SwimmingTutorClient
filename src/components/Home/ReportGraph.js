@@ -8,9 +8,11 @@ const ReportGraph = () => {
   const [data, setData] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [maxValues, setMaxValues] = useState({});
+  const [allDataEmpty, setAllDataEmpty] = useState(false);
 
   const images = ['lap_count.png', 'speed.png', 'heart_rate.png', 'carlory.png'];
   const imagePaths = images.map(image => require(`../../assets/images/${image}`));
+  const noDataImagePath = require('../../assets/images/swim-graph-nodata.png');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,15 +29,15 @@ const ReportGraph = () => {
             const category = item.category;
             const value = item.value;
 
-            if (!acc[startTime]) {
-              acc[startTime] = { name: startTime };
+            const formattedStartTime = startTime.replace('T', ' ').split(' ').join('\n');
+
+            if (!acc[formattedStartTime]) {
+              acc[formattedStartTime] = { name: formattedStartTime };
             }
 
-            acc[startTime][category] = value;
+            acc[formattedStartTime][category] = value;
             return acc;
-          }, []);
-
-        console.log(transformedData);
+          }, {});
 
         const maxValues = response.data.reduce((acc, item) => {
           const category = item.category;
@@ -47,6 +49,11 @@ const ReportGraph = () => {
 
           return acc;
         }, {});
+
+        const allEmpty = Object.keys(maxValues).every(
+          key => maxValues[key] === undefined || maxValues[key] === null || maxValues[key] === ''
+        );
+        setAllDataEmpty(allEmpty);
 
         setData(Object.values(transformedData));
         setMaxValues(maxValues);
@@ -118,43 +125,71 @@ const ReportGraph = () => {
           <option value='calories'>칼로리</option>
         </select>
       </div>
-      <ResponsiveContainer width='100%' height={400}>
-        <LineChart data={data}>
-          <CartesianGrid strokeDasharray='3 3' />
-          <XAxis
-            dataKey='name'
-            type='category'
-            label={{ value: 'StartTime', position: 'insideBottomRight', offset: -10 }}
+
+      {allDataEmpty ? (
+        <div style={{ textAlign: 'center', marginTop: '20px' }}>
+          <img
+            src={noDataImagePath}
+            alt='No Data Available'
+            style={{
+              width: '100%',
+              maxWidth: '600px',
+              height: '400px',
+              borderRadius: '15px'
+            }}
           />
-          <YAxis type='number' label={{ value: '데이터', angle: -90, position: 'insideLeft' }} />
-          <Tooltip />
-          <Legend />
-          {renderLines()}
-        </LineChart>
-      </ResponsiveContainer>
-      {/* <hr style={{ border: '1px solid gray', margin: '20px 0' }} /> */}
+        </div>
+      ) : (
+        <ResponsiveContainer width='100%' height={400}>
+          <LineChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+            <CartesianGrid strokeDasharray='3 3' />
+            <XAxis
+              dataKey='name'
+              type='category'
+              tickFormatter={tick => {
+                const date = new Date(tick);
+                const month = (date.getMonth() + 1).toString().padStart(2, '0');
+                const day = date.getDate().toString().padStart(2, '0');
+                return `${month}/${day}`;
+              }}
+              interval={0}
+              tick={{ fontSize: 12 }}
+            />
+            <YAxis type='number' label={{ value: '데이터', angle: -90, position: 'insideLeft' }} />
+            <Tooltip />
+            <Legend />
+            {renderLines()}
+          </LineChart>
+        </ResponsiveContainer>
+      )}
+
       {blankDiv}
       <PageTitle title='나의 기록' />
-      <div style={{ display: 'flex', justifyContent: 'center', padding: '20px 0', textAlign: 'left' }}>
-        <div>
-          {['랩 횟수', '속도', '심박수', '칼로리'].map((category, index) => (
-            <div key={category} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-              <img
-                src={imagePaths[index]}
-                alt={category}
-                style={{ width: '20px', height: '20px', marginRight: '10px' }}
-              />
-              <span>{category}</span>
-            </div>
-          ))}
-        </div>
-        <div style={{ marginLeft: '20px' }}>
-          {['랩 횟수', '속도', '심박수', '칼로리'].map(category => (
-            <div key={category} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-              <span>{maxValues[category]}</span>
-            </div>
-          ))}
-        </div>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'left',
+          padding: '20px 0',
+          textAlign: 'left',
+          marginLeft: '10%'
+        }}
+      >
+        {['랩 횟수', '속도', '심박수', '칼로리'].map((category, index) => (
+          <div key={category} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+            <img
+              src={imagePaths[index]}
+              alt={category}
+              style={{ width: '45px', height: '45px', marginRight: '10px' }}
+            />
+            <span style={{ flex: 1 }}>{category}</span>
+            <span style={{ flex: 1, textAlign: 'left' }}>
+              {maxValues[category.toLowerCase()] !== undefined
+                ? maxValues[category.toLowerCase()]
+                : '데이터가 없습니다'}
+            </span>
+          </div>
+        ))}
       </div>
     </div>
   );
