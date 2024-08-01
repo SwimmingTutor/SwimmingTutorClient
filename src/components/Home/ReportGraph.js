@@ -26,13 +26,20 @@ const ReportGraph = () => {
   const imagePaths = images.map(image => require(`../../assets/images/${image}`));
   const noDataImagePath = require('../../assets/images/swim-graph-nodata.png');
 
+  const categoryMapping = {
+    '랩 횟수': 'distance',
+    속도: 'speed',
+    심박수: 'heartRate',
+    칼로리: 'calories'
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get('/report');
 
         const transformedData = response.data
-          .filter(item => ['distance', 'speed', 'heartRate', 'calories'].includes(item.category))
+          .filter(item => Object.values(categoryMapping).includes(item.category))
           .reduce((acc, item) => {
             const { startTime } = item;
             const category = item.category;
@@ -67,6 +74,8 @@ const ReportGraph = () => {
         const sortedData = Object.values(transformedData).sort((a, b) => a.name - b.name);
         setData(sortedData);
         setMaxValues(maxValues);
+
+        console.log('Max Values:', maxValues);
 
         if (sortedData.length > 0) {
           setDateRangeForPage(sortedData, 0);
@@ -278,8 +287,8 @@ const ReportGraph = () => {
             />
             <span style={{ flex: 1 }}>{category}</span>
             <span style={{ flex: 1, textAlign: 'left' }}>
-              {maxValues[category.toLowerCase()] !== undefined
-                ? maxValues[category.toLowerCase()]
+              {maxValues[categoryMapping[category]] !== undefined
+                ? maxValues[categoryMapping[category]]
                 : '데이터가 없습니다'}
             </span>
           </div>
