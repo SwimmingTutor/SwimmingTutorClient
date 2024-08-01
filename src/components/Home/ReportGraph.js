@@ -90,7 +90,7 @@ const ReportGraph = () => {
 
     if (pageData.length > 0) {
       const startDate = moment(pageData[0].name);
-      const endDate = moment(pageData[pageData.length - 1].name).add(6, 'days');
+      const endDate = moment(pageData[pageData.length - 1].name);
       const dateRange = `${startDate.format('M.DD')} ~ ${endDate.format('M.DD')}`;
       setDateRange(dateRange);
     } else {
@@ -220,11 +220,13 @@ const ReportGraph = () => {
               <CartesianGrid strokeDasharray='3 3' />
               <XAxis
                 dataKey='name'
-                type='number' // 시간 축을 사용하기 위해 number로 설정
+                type='number'
                 domain={['dataMin', moment('2024-06-01').add(6, 'days').valueOf()]}
                 tick={{ fontSize: 12 }}
                 tickFormatter={tick => moment(tick).format('MM-DD')}
+                ticks={Array.from({ length: 7 }, (_, i) => moment('2024-06-01').add(i, 'days').valueOf())} // 7일 동안의 ticks 설정
               />
+
               <YAxis type='number' label={{ value: '데이터', angle: -90, position: 'insideLeft' }} />
               <Tooltip
                 labelFormatter={label => moment(label).format('YYYY-MM-DD HH:mm')}
