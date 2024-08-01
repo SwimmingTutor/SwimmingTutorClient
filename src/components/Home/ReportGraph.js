@@ -31,8 +31,6 @@ const ReportGraph = () => {
       try {
         const response = await axios.get('/report');
 
-        console.log('Raw data:', response.data);
-
         const transformedData = response.data
           .filter(item => ['distance', 'speed', 'heartRate', 'calories'].includes(item.category))
           .reduce((acc, item) => {
@@ -73,9 +71,6 @@ const ReportGraph = () => {
         if (sortedData.length > 0) {
           setDateRangeForPage(sortedData, 0);
         }
-
-        console.log('transformed data : ' + JSON.stringify(transformedData));
-        console.log('max values : ' + JSON.stringify(maxValues));
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -90,7 +85,7 @@ const ReportGraph = () => {
 
     if (pageData.length > 0) {
       const startDate = moment(pageData[0].name);
-      const endDate = moment(pageData[pageData.length - 1].name);
+      const endDate = moment(startDate).add(6, 'days'); // 6일간의 날짜 범위를 계산
       const dateRange = `${startDate.format('M.DD')} ~ ${endDate.format('M.DD')}`;
       setDateRange(dateRange);
     } else {
@@ -221,12 +216,32 @@ const ReportGraph = () => {
               <XAxis
                 dataKey='name'
                 type='number'
-                domain={['dataMin', moment('2024-06-01').add(6, 'days').valueOf()]}
+                domain={[
+                  data.length > 0
+                    ? moment(data[pageIndex * 7].name)
+                        .startOf('day')
+                        .valueOf()
+                    : 'dataMin',
+                  data.length > 0
+                    ? moment(data[pageIndex * 7].name)
+                        .add(6, 'days')
+                        .endOf('day')
+                        .valueOf()
+                    : 'dataMax'
+                ]}
                 tick={{ fontSize: 12 }}
                 tickFormatter={tick => moment(tick).format('MM-DD')}
-                ticks={Array.from({ length: 7 }, (_, i) => moment('2024-06-01').add(i, 'days').valueOf())} // 7일 동안의 ticks 설정
+                ticks={
+                  data.length > 0
+                    ? Array.from({ length: 7 }, (_, i) =>
+                        moment(data[pageIndex * 7].name)
+                          .add(i, 'days')
+                          .startOf('day')
+                          .valueOf()
+                      )
+                    : []
+                }
               />
-
               <YAxis type='number' label={{ value: '데이터', angle: -90, position: 'insideLeft' }} />
               <Tooltip
                 labelFormatter={label => moment(label).format('YYYY-MM-DD HH:mm')}
