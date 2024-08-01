@@ -1,16 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Listbox, ListboxButton, ListboxOptions, ListboxOption, Label } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 
-const SelectBox = ({ label, selectOption, onChange }) => {
-  const [selected, setSelected] = useState(selectOption[0]);
-  
-  useEffect(() => {
-    if (selectOption !== undefined) {
-      setSelected(selectOption[0]);
-      onChange(selectOption[0]);
-    }
-  }, []);
+const SelectBox = ({ label, selectOption, onChange, value }) => {
+  const defaultValue = value || selectOption[0];
+  const [selected, setSelected] = useState(defaultValue);
 
   const handleChange = value => {
     setSelected(value);

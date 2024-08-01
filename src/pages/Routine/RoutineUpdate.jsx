@@ -16,17 +16,11 @@ const RoutineUpdatePage = () => {
   const selStrokes = initialState.selStrokes;
 
   const [routineName, setRoutineName] = useState(initialState.routineName || '');
-  const [poolLength, setPoolLength] = useState(initialState.poolLength || '');
+  const [poolLength, setPoolLength] = useState(initialState.poolLength || 25);
 
   const handleRoutineName = value => {
     setRoutineName(value);
     // console.log('routineName:', value);
-  };
-
-  const handlePoolLength = value => {
-    // 문자열 'm' 제거
-    setPoolLength(value.replace('m', ''));
-    // console.log('poolLength:', value);
   };
 
   const handleCancel = async () => {
@@ -36,18 +30,15 @@ const RoutineUpdatePage = () => {
   const handleUpdate = async () => {
     try {
       // Send the updated data to the server
-      await axios.put(
-        `/routine/update/${routineNo}`,
-        {
-          routineName: routineName,
-          poolLength: poolLength,
-          targetDistance: targetDistance,
-          selStrokes: selStrokes,
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-          }
+      await axios.put(`/routine/update/${routineNo}`, {
+        routineName: routineName,
+        poolLength: poolLength,
+        targetDistance: targetDistance,
+        selStrokes: selStrokes,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`
         }
-      );
+      });
       console.log('Routine updated successfully!');
       navigate('/routine');
     } catch (error) {
@@ -58,13 +49,13 @@ const RoutineUpdatePage = () => {
   return (
     <div>
       <PageTitle title='루틴 수정' />
-      <InputText label='루틴명' placeholder={initialState.routineName} defaultValue={routineName} onChange={handleRoutineName} />
-      <SelectBox
-        label='레인 길이'
-        selectOption={['25m', '50m']}
-        defaultValue={poolLength}
-        onChange={handlePoolLength}
+      <InputText
+        label='루틴명'
+        placeholder={initialState.routineName}
+        defaultValue={routineName}
+        onChange={handleRoutineName}
       />
+      <SelectBox label='레인 길이(m)' selectOption={[25, 50]} value={poolLength} onChange={setPoolLength} />
       <div className='h-5' />
       <div className='mt-4 flex justify-between'>
         <Button key='cancel' onClick={handleCancel} content='취소' type='cancel' />

@@ -12,7 +12,7 @@ const RoutineCreatePage = () => {
   const navigate = useNavigate();
   const [routineName, setRoutineName] = useState('');
   const [targetDistance, setTargetDistance] = useState(1000);
-  const [poolLength, setPoolLength] = useState('25m');
+  const [poolLength, setPoolLength] = useState(25);
   const [strokes, setStrokes] = useState([]);
 
   const handleRoutineName = value => {
@@ -49,15 +49,12 @@ const RoutineCreatePage = () => {
     }
     // Request to the server with axios
     try {
-      const response = await axios.post(
-        '/routine',
-        {
-          routineName: routineName,
-          poolLength: poolLength,
-          targetDistance: targetDistance,
-          selStrokes: strokes
-        }
-      );
+      const response = await axios.post('/routine', {
+        routineName: routineName,
+        poolLength: poolLength,
+        targetDistance: targetDistance,
+        selStrokes: strokes
+      });
       const noLevelStrokes = response.data;
       if (noLevelStrokes.length == 0) {
         navigate('/routine');
@@ -78,12 +75,7 @@ const RoutineCreatePage = () => {
         defaultValue={routineName}
         onChange={handleRoutineName}
       />
-      <SelectBox
-        label='레인 길이'
-        selectOption={['25m', '50m']}
-        defaultValue={poolLength}
-        onChange={handlePoolLength}
-      />
+      <SelectBox label='레인 길이(m)' selectOption={[25, 50]} defaultValue={poolLength} onChange={setPoolLength} />
       <InputNumber label='목표 거리' unit={100} defaultValue={targetDistance} onChange={handleDistance} />
       <MultiSelectBox
         label='영법 선택'
