@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Button from '../../components/UI/Button.jsx';
 import axios from '../../utils/https/axios/customAxios';
 import PageTitle from '../../components/PageTitle.jsx';
+import moment from 'moment';
 
 const RoutinePage = () => {
 
@@ -33,7 +34,7 @@ const RoutinePage = () => {
         <Link key={routine.routineNo} to={`/routine/${routine.routineNo}`}>
           <div className='my-4 border p-4'>
             <h3 className='text-xl font-bold'>{routine.routineName}</h3>
-            <p className='text-gray-500'>{routine.created}</p>
+            <p className='text-gray-500'>{moment(routine.created).format('YYYY-MM-DD HH:mm:ss')}</p>
           </div>
         </Link>
       ))}
