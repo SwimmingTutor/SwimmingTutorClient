@@ -1,10 +1,10 @@
 import Menu from "../Menu.jsx";
 
 const MANU_ELEMENT_INFO = [
-    {
-        name: "기록하기",
-        path: "record",
-    },
+    // {
+    //     name: "기록하기",
+    //     path: "record",
+    // },
     {
         name: "프로필 설정",
         path: "profile",

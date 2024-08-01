@@ -1,7 +1,6 @@
-import MenuList from '../../components/My/ManuList.jsx';
+import MenuList from '../../components/My/MenuList.jsx';
 
 const MyPage = () => {
-  
   return <MenuList />;
 };
 
