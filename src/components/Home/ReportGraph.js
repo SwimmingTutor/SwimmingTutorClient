@@ -1,7 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  ReferenceDot
+} from 'recharts';
 import axios from '../../utils/https/axios/customAxios';
-import MyActiveIcon from '../../assets/icons/my-active.svg';
+import moment from 'moment';
 import PageTitle from '../PageTitle.jsx';
 
 const ReportGraph = () => {
@@ -9,6 +19,8 @@ const ReportGraph = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [maxValues, setMaxValues] = useState({});
   const [allDataEmpty, setAllDataEmpty] = useState(false);
+  const [dateRange, setDateRange] = useState('');
+  const [pageIndex, setPageIndex] = useState(0);
 
   const images = ['lap_count.png', 'speed.png', 'heart_rate.png', 'carlory.png'];
   const imagePaths = images.map(image => require(`../../assets/images/${image}`));
@@ -19,23 +31,22 @@ const ReportGraph = () => {
       try {
         const response = await axios.get('/report');
 
-        // 데이터 구조 변경 및 최대값 추출
-        console.log(response.data);
+        console.log('Raw data:', response.data);
 
         const transformedData = response.data
-          .filter(item => ['distance', 'speed', 'heartRate', 'calories'].includes(item.category)) // 관심 있는 데이터 카테고리만 추출
+          .filter(item => ['distance', 'speed', 'heartRate', 'calories'].includes(item.category))
           .reduce((acc, item) => {
             const { startTime } = item;
             const category = item.category;
             const value = item.value;
 
-            const formattedStartTime = startTime.replace('T', ' ').split(' ').join('\n');
+            const formattedDate = moment(startTime).valueOf(); // Unix timestamp 사용
 
-            if (!acc[formattedStartTime]) {
-              acc[formattedStartTime] = { name: formattedStartTime };
+            if (!acc[formattedDate]) {
+              acc[formattedDate] = { name: formattedDate };
             }
 
-            acc[formattedStartTime][category] = value;
+            acc[formattedDate][category] = value;
             return acc;
           }, {});
 
@@ -55,8 +66,14 @@ const ReportGraph = () => {
         );
         setAllDataEmpty(allEmpty);
 
-        setData(Object.values(transformedData));
+        const sortedData = Object.values(transformedData).sort((a, b) => a.name - b.name);
+        setData(sortedData);
         setMaxValues(maxValues);
+
+        if (sortedData.length > 0) {
+          setDateRangeForPage(sortedData, 0);
+        }
+
         console.log('transformed data : ' + JSON.stringify(transformedData));
         console.log('max values : ' + JSON.stringify(maxValues));
       } catch (error) {
@@ -66,8 +83,37 @@ const ReportGraph = () => {
     fetchData();
   }, []);
 
+  const setDateRangeForPage = (data, pageIndex) => {
+    const startIndex = pageIndex * 7;
+    const endIndex = Math.min(startIndex + 7, data.length);
+    const pageData = data.slice(startIndex, endIndex);
+
+    if (pageData.length > 0) {
+      const startDate = moment(pageData[0].name);
+      const endDate = moment(pageData[pageData.length - 1].name).add(6, 'days');
+      const dateRange = `${startDate.format('M.DD')} ~ ${endDate.format('M.DD')}`;
+      setDateRange(dateRange);
+    } else {
+      setDateRange('');
+    }
+  };
+
   const handleCategoryChange = event => {
     setSelectedCategory(event.target.value);
+  };
+
+  const handlePrevPage = () => {
+    if (pageIndex > 0) {
+      setPageIndex(pageIndex - 1);
+      setDateRangeForPage(data, pageIndex - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if ((pageIndex + 1) * 7 < data.length) {
+      setPageIndex(pageIndex + 1);
+      setDateRangeForPage(data, pageIndex + 1);
+    }
   };
 
   const renderLines = () => {
@@ -134,33 +180,64 @@ const ReportGraph = () => {
             style={{
               width: '100%',
               maxWidth: '600px',
-              height: '400px',
+              height: '300px',
               borderRadius: '15px'
             }}
           />
         </div>
       ) : (
-        <ResponsiveContainer width='100%' height={400}>
-          <LineChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-            <CartesianGrid strokeDasharray='3 3' />
-            <XAxis
-              dataKey='name'
-              type='category'
-              tickFormatter={tick => {
-                const date = new Date(tick);
-                const month = (date.getMonth() + 1).toString().padStart(2, '0');
-                const day = date.getDate().toString().padStart(2, '0');
-                return `${month}/${day}`;
-              }}
-              interval={0}
-              tick={{ fontSize: 12 }}
-            />
-            <YAxis type='number' label={{ value: '데이터', angle: -90, position: 'insideLeft' }} />
-            <Tooltip />
-            <Legend />
-            {renderLines()}
-          </LineChart>
-        </ResponsiveContainer>
+        <div>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginBottom: '10px',
+              fontWeight: 'bold'
+            }}
+          >
+            <button
+              onClick={handlePrevPage}
+              disabled={pageIndex === 0}
+              style={{ cursor: pageIndex === 0 ? 'not-allowed' : 'pointer' }}
+            >
+              {'<'}
+            </button>
+            <span style={{ margin: '0 10px' }}>{dateRange}</span>
+            <button
+              onClick={handleNextPage}
+              disabled={(pageIndex + 1) * 7 >= data.length}
+              style={{ cursor: (pageIndex + 1) * 7 >= data.length ? 'not-allowed' : 'pointer' }}
+            >
+              {'>'}
+            </button>
+          </div>
+          <ResponsiveContainer width='100%' height={300}>
+            <LineChart
+              data={data.slice(pageIndex * 7, (pageIndex + 1) * 7)}
+              margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+            >
+              <CartesianGrid strokeDasharray='3 3' />
+              <XAxis
+                dataKey='name'
+                type='number' // 시간 축을 사용하기 위해 number로 설정
+                domain={['dataMin', moment('2024-06-01').add(6, 'days').valueOf()]}
+                tick={{ fontSize: 12 }}
+                tickFormatter={tick => moment(tick).format('MM-DD')}
+              />
+              <YAxis type='number' label={{ value: '데이터', angle: -90, position: 'insideLeft' }} />
+              <Tooltip
+                labelFormatter={label => moment(label).format('YYYY-MM-DD HH:mm')}
+                formatter={(value, name) => [value, name]}
+              />
+              <Legend />
+              {renderLines()}
+              {data.map(d => (
+                <ReferenceDot key={d.name} x={d.name} y={d[selectedCategory]} r={4} fill='red' stroke='none' />
+              ))}
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
       )}
 
       {blankDiv}
