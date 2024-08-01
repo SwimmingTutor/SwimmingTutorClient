@@ -6,8 +6,10 @@ import MultiSelectBox from '../../components/UI/MultiSelectBox.jsx';
 import InputText from '../../components/UI/InputText.jsx';
 import Button from '../../components/UI/Button.jsx';
 import axios from '../../utils/https/axios/customAxios';
+import { useNavigate } from 'react-router-dom';
 
 const RoutineCreatePage = () => {
+  const navigate = useNavigate();
   const [routineName, setRoutineName] = useState('');
   const [targetDistance, setTargetDistance] = useState(1000);
   const [poolLength, setPoolLength] = useState('25m');
@@ -47,7 +49,7 @@ const RoutineCreatePage = () => {
     }
     // Request to the server with axios
     try {
-      await axios.post(
+      const response = await axios.post(
         '/routine',
         {
           routineName: routineName,
@@ -56,9 +58,12 @@ const RoutineCreatePage = () => {
           selStrokes: strokes
         }
       );
-
-      // Redirect to /routine page
-      window.location.href = '/routine';
+      const noLevelStrokes = response.data;
+      if (noLevelStrokes.length == 0) {
+        navigate('/routine');
+      } else {
+        alert(`${noLevelStrokes} 레벨 테스트를 먼저 진행해주세요 😅`);
+      }
     } catch (error) {
       console.error('Error posting data:', error);
     }
