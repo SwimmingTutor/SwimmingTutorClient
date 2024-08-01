@@ -1,64 +1,119 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState, useMemo } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import SessionData from '../../components/Routine/SessionForm.jsx';
 import axios from '../../utils/https/axios/customAxios';
 import usePageSetup from '../../hooks/usePageSetup.js';
 import PageTitle from '../../components/PageTitle.jsx';
+import Button from '../../components/UI/Button.jsx';
 
 const RoutineDetailPage = () => {
-  const { routineNo } = useParams();
   usePageSetup('routine-routineNo');
 
-  const [trainings, setTrainings] = useState([]);
-
+  const navigate = useNavigate();
+  const { routineNo } = useParams();
   const blankDiv5 = <div className='h-5' />;
-  
-  const sessionName = ['워밍업', '코어', '쿨다운'];
-  const warmupData = [];
-  const coreData = [];
-  const cooldownData = [];
+  const blankDiv10 = <div className='h-10' />;
+
+  const [routineInfo, setRoutineInfo] = useState({
+    routineName: '',
+    poolLength: 0,
+    selStrokes: '',
+    targetDistance: 0,
+    created: '',
+    updated: '',
+    trainingData: []
+  });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`/routine/${routineNo}`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-          }
-        });
-        setTrainings(response.data);
+        const response = await axios.get(`/routine/${routineNo}`);
+        setRoutineInfo(response.data);
       } catch (error) {
         console.error(error);
       }
     };
     fetchData();
-  }, []);
-  // console.log(trainings);
+  }, [routineNo]);
 
-  trainings.map(training => {
-    // console.log(training);
-    switch (training.session) {
-      case sessionName[0]:
-        warmupData.push(training);
-        break;
-      case sessionName[1]:
-        coreData.push(training);
-        break;
-      case sessionName[2]:
-        cooldownData.push(training);
-        break;
-      default:
-        break;
+  const { trainingData } = routineInfo;
+  const sessionName = ['워밍업', '코어', '쿨다운'];
+  const categorizedData = sessionName.map(name => trainingData.filter(training => training.session === name));
+
+  const formatDate = useMemo(
+    () => date => {
+      const formattedDate = new Date(date).toLocaleString('ko-KR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      });
+      return formattedDate;
+    },
+    []
+  );
+  
+  const handleDelete = async () => {
+    // Request to the server with axios
+    try {
+      await axios.delete(`/routine/${routineNo}`);
+      // Redirect to /routine page
+      navigate('/routine');
+    } catch (error) {
+      console.error('Error deleting data:', error);
     }
-  });
+  };
+
+  const handleUpdate = async () => {
+    // Request to the server with axios
+    try {
+      navigate('/routine/update', {
+        state: {
+          routineNo: routineNo,
+          routineName: routineInfo.routineName,
+          poolLength: routineInfo.poolLength,
+          targetDistance: routineInfo.targetDistance,
+          selStrokes: routineInfo.selStrokes
+        }
+      });
+    } catch (error) {
+      console.error('Error posting data:', error);
+    }
+  };
+
+  const InfoRow = ({ label, value }) => (
+    <tr>
+      <td className='border-b px-2 py-1 text-center font-semibold'>{label}</td>
+      <td className='border-b px-2 py-1 text-center'>{value}</td>
+    </tr>
+  );
 
   return (
     <div>
-      <PageTitle title='루틴 상세' />
+      <PageTitle title={routineInfo.routineName} />
       {blankDiv5}
-      <SessionData key={sessionName[0]} title={sessionName[0]} data={warmupData} />
-      <SessionData key={sessionName[1]} title={sessionName[1]} data={coreData} />
-      <SessionData key={sessionName[2]} title={sessionName[2]} data={cooldownData} />
+      <table className='min-w-full border border-gray-300 bg-white'>
+        <tbody>
+          <InfoRow label='레인길이' value={`${routineInfo.poolLength}m`} />
+          <InfoRow label='훈련영법' value={routineInfo.selStrokes} />
+          <InfoRow label='목표거리' value={`${routineInfo.targetDistance}m`} />
+          <InfoRow label='생성일시' value={formatDate(routineInfo.created)} />
+          <InfoRow label='수정일시' value={formatDate(routineInfo.updated)} />
+        </tbody>
+      </table>
+      {blankDiv5}
+      <div className='mt-4 flex justify-between'>
+        <Button key='delete' onClick={handleDelete} content='삭제' type='cancel' />
+        <Button key='update' onClick={handleUpdate} content='수정' />
+      </div>
+      {blankDiv10}
+      <div className='grid gap-4'>
+        {sessionName.map((name, index) => (
+          <SessionData key={name} title={name} data={categorizedData[index]} />
+        ))}
+      </div>
     </div>
   );
 };

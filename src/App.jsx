@@ -15,6 +15,7 @@ import RoutineContainer from './containers/RoutineContainer.jsx';
 import RoutinePage from './pages/Routine/Routine.jsx';
 import RoutineDetailPage from './pages/Routine/RoutineDetail.jsx';
 import RoutineCreatePage from './pages/Routine/RoutineCreate.jsx';
+import RoutineUpdatePage from './pages/Routine/RoutineUpdate.jsx';
 
 import MyContainer from './containers/MyContainer.jsx';
 import MyPage from './pages/My/My.jsx';
@@ -79,6 +80,10 @@ const router = createBrowserRouter([
           {
             path: 'create',
             element: <RoutineCreatePage />
+          },
+          {
+            path: 'update',
+            element: <RoutineUpdatePage />
           }
         ]
       },

@@ -1,18 +1,21 @@
 import PageTitle from '../PageTitle.jsx';
+import Button from '../UI/Button.jsx';
 
-const blankDiv3 = <div className='h-3' />;
-const blankDiv5 = <div className='h-5' />;
+const blankDiv1 = <div className='h-1' />;
+const blankDiv2 = <div className='h-2' />;
+
 const SessionData = ({ title, data }) => {
   return (
-    <>
-      <PageTitle title={title} />
-      {blankDiv3}
+    <div className='mx-2'>
+      <div className='mt-2 mb-2 text-sm !text-sm'>
+        <PageTitle title={title} />
+      </div>
       <table className='min-w-full border border-gray-300 bg-white'>
         <thead>
           <tr>
             <th className='border-b px-4 py-2 text-center'>영법</th>
             <th className='border-b px-4 py-2 text-center'>거리</th>
-            <th className='border-b px-4 py-2 text-center'>기술</th>
+            <th className='border-b px-4 py-2 text-center'>세트 수</th>
             {/* Add more table headers as needed */}
           </tr>
         </thead>
@@ -34,8 +37,9 @@ const SessionData = ({ title, data }) => {
           )}
         </tbody>
       </table>
-      {blankDiv5}
-    </>
+      {blankDiv1}
+      
+    </div>
   );
 };
 
