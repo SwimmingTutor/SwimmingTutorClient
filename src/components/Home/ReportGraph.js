@@ -21,6 +21,7 @@ const ReportGraph = () => {
   const [allDataEmpty, setAllDataEmpty] = useState(false);
   const [dateRange, setDateRange] = useState('');
   const [pageIndex, setPageIndex] = useState(0);
+  const [isUnauthorized, setIsUnauthorized] = useState(false); // 로그인 여부 확인 상태 추가
 
   const images = ['lap_count.png', 'speed.png', 'heart_rate.png', 'carlory.png'];
   const imagePaths = images.map(image => require(`../../assets/images/${image}`));
@@ -81,7 +82,11 @@ const ReportGraph = () => {
           setDateRangeForPage(sortedData, 0);
         }
       } catch (error) {
-        console.error('Error fetching data:', error);
+        if (error.response && error.response.status === 401) {
+          setIsUnauthorized(true); // 401 오류일 경우 로그인되지 않은 상태로 설정
+        } else {
+          console.error('Error fetching data:', error);
+        }
       }
     };
     fetchData();
@@ -176,7 +181,7 @@ const ReportGraph = () => {
         </select>
       </div>
 
-      {allDataEmpty ? (
+      {allDataEmpty || isUnauthorized ? ( // 데이터가 없거나 로그인되지 않은 경우
         <div style={{ textAlign: 'center', marginTop: '20px' }}>
           <img
             src={noDataImagePath}
