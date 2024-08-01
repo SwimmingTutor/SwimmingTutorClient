@@ -20,7 +20,7 @@ const PageContainer = ({ children }) => {
           <Outlet context={{ handleHeaderType }} />
           {children}
         </Main>
-        {/* <Footer /> */}
+        <Footer />
       </Wrapper>
       <Nav activePage={headerType} />
     </>
