@@ -130,12 +130,25 @@ const ReportGraph = () => {
 
     if (selectedCategory === 'all') {
       return categories.map(category => (
-        <Line key={category} type='monotone' dataKey={category} stroke={getColor(category)} name={category} />
+        <Line
+          key={category}
+          type='monotone'
+          dataKey={category}
+          stroke={getColor(category)}
+          name={category}
+          isAnimationActive={true} // '전체' 선택 시 애니메이션 활성화
+        />
       ));
     }
 
     return (
-      <Line type='monotone' dataKey={selectedCategory} stroke={getColor(selectedCategory)} name={selectedCategory} />
+      <Line
+        type='monotone'
+        dataKey={selectedCategory}
+        stroke={getColor(selectedCategory)}
+        name={selectedCategory}
+        isAnimationActive={false} // 다른 카테고리 선택 시 애니메이션 비활성화
+      />
     );
   };
 

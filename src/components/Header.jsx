@@ -13,9 +13,8 @@ function getHeaderType(type) {
   }[type];
 }
 
-const Header = (/*{ headerType }*/) => {
+const Header = () => {
   const { headerType } = useHeaderContext();
-  // console.log('Header type:', headerType);
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
@@ -31,29 +30,26 @@ const Header = (/*{ headerType }*/) => {
     navigate('/accounts/login');
   };
 
-  let headerClassName = 'stiky top-0 z-40 w-full h-14 p-1 flex flex-row justify-between items-center bg-white ';
-  let logoContainerClassName = 'logo-container w-full h-full flex items-center p-5 max-w-[7rem]';
-  let accountContainerClassName = 'account-container w-full max-w-32 p-3 flex flex-row justify-around text-xs';
-  let accountContainerBtnClassName = 'w-full cursor-pointer hover:text-primary-500';
-
   return (
-    <header id='header' className={headerClassName}>
-      <div className={logoContainerClassName}>{getHeaderType(headerType)}</div>
-      <div className={accountContainerClassName}>
-        {isLoggedIn ? (
-          <button className={accountContainerBtnClassName} onClick={handleLogout}>
-            로그아웃
-          </button>
-        ) : (
-          <>
-            <Link className={accountContainerBtnClassName} to='/accounts/login'>
-              로그인
-            </Link>
-            <Link className={accountContainerBtnClassName} to='/accounts/join'>
-              회원가입
-            </Link>
-          </>
-        )}
+    <header id='header' className='fixed top-0 z-40 bg-white shadow-md'>
+      <div className='container mx-auto flex h-14 items-center justify-between px-5 lg:w-app'>
+        <div className='flex max-w-[7rem] items-center'>{getHeaderType(headerType)}</div>
+        <div className='flex space-x-4 text-xs'>
+          {isLoggedIn ? (
+            <button className='cursor-pointer hover:text-primary-500' onClick={handleLogout}>
+              로그아웃
+            </button>
+          ) : (
+            <>
+              <Link className='cursor-pointer hover:text-primary-500' to='/accounts/login'>
+                로그인
+              </Link>
+              <Link className='cursor-pointer hover:text-primary-500' to='/accounts/join'>
+                회원가입
+              </Link>
+            </>
+          )}
+        </div>
       </div>
     </header>
   );
