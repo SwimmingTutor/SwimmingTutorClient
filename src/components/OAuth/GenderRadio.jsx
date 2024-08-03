@@ -1,7 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const GenderRadio = ({ label = 'label' }) => {
+const GenderRadio = ({ value, onChange, label = 'label' }) => {
   const [selectedGender, setSelectedGender] = useState('');
+
+  const changeHandler = value => {
+    setSelectedGender(value);
+    if (onChange) {
+      onChange(value);
+    }
+  };
+
+  useEffect(() => {
+    setSelectedGender(value);
+  }, [value]);
 
   return (
     <div>
@@ -16,7 +27,7 @@ const GenderRadio = ({ label = 'label' }) => {
             type='radio'
             value='M'
             checked={selectedGender === 'M'}
-            onChange={e => setSelectedGender(e.target.value)}
+            onChange={e => changeHandler(e.target.value)}
             className='form-radio h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500'
           />
           <label htmlFor='M' className='ml-2 text-sm font-medium text-gray-700'>
@@ -30,7 +41,7 @@ const GenderRadio = ({ label = 'label' }) => {
             type='radio'
             value='F'
             checked={selectedGender === 'F'}
-            onChange={e => setSelectedGender(e.target.value)}
+            onChange={e => changeHandler(e.target.value)}
             className='form-radio h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500'
           />
           <label htmlFor='F' className='ml-2 text-sm font-medium text-gray-700'>

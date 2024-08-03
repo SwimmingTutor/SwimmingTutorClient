@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import CenterWrapper from '../../components/Layout/CenterWrapper.jsx';
+import { useNavigate } from 'react-router-dom';
 import OAuthHeader from '../../components/OAuthHeader.jsx';
 import Button from '../../components/UI/Button.jsx';
 import SelectBox from '../../components/UI/SelectBox.jsx';
@@ -13,6 +13,7 @@ const purposeOptions = ['다이어트', '근력 강화', '건강 증진', '재�
 // TODO: 로그인시 헤더 '로그아웃' 노출
 const ExperiencePage = () => {
   usePageSetup('experience');
+  const navigate = useNavigate();
 
   const [preference, setPreference] = useState('');
   const [goal, setGoal] = useState('');
@@ -23,8 +24,6 @@ const ExperiencePage = () => {
         const response = await axios.get('/users/experience');
         const { data } = response;
         const { preference, goal } = data;
-
-        console.log(data);
 
         setPreference(preference);
         setGoal(goal);
@@ -44,7 +43,8 @@ const ExperiencePage = () => {
         preference,
         goal
       });
-      console.log(response);
+
+      navigate('/my');
     } catch (error) {
       console.error(error);
     }

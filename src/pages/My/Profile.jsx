@@ -1,6 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import CenterWrapper from '../../components/Layout/CenterWrapper.jsx';
+import { useNavigate } from 'react-router-dom';
 import OAuthHeader from '../../components/OAuthHeader.jsx';
 import Button from '../../components/UI/Button.jsx';
 import ModalDeleteAccount from '../../components/UI/ModalDeleteAccount.jsx';
@@ -14,7 +13,6 @@ import axios from '../../utils/https/axios/customAxios';
 const ProfilePage = () => {
   usePageSetup('profile');
   const deleteAccountModalRef = useRef();
-  const location = useLocation();
   const navigate = useNavigate();
 
   const [name, setName] = useState('');
@@ -28,7 +26,7 @@ const ProfilePage = () => {
       try {
         const { data } = await axios.get('/users/profile');
         const { name, gender, birth, height, weight } = data;
-        console.log(data);
+
         setName(name);
         setGender(gender);
         setBirth(birth);
@@ -50,6 +48,8 @@ const ProfilePage = () => {
         height,
         weight
       });
+
+      navigate('/my');
     } catch (err) {
       console.error(err);
     }
@@ -71,7 +71,7 @@ const ProfilePage = () => {
         {blankDiv1}
         {/* TODO: 성별 - select box로 변경 */}
         {/* <InputText label='성별' placeholder='성별' /> */}
-        <GenderRadio label='성별'></GenderRadio>
+        <GenderRadio value={gender} label='성별' onChange={setGender}></GenderRadio>
         {blankDiv1}
         <InputText type='date' defaultValue={birth} label='생년월일' onChange={setBirth} />
         {blankDiv1}
