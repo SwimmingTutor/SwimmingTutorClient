@@ -4,18 +4,7 @@ import axios from '../utils/https/axios/customAxios';
 function useWebViewBridge() {
   const sendDataToServer = useCallback(async parsedData => {
     try {
-      const response = await axios.post(
-        'record/',
-        { data: parsedData.flat() }
-        // {
-        //   data: parsedData
-        // }
-        // {
-        //   headers: {
-        //     Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-        //   }
-        // }
-      );
+      const response = await axios.post('record/', { data: parsedData.flat() });
       console.log('Server response:', response.data);
     } catch (error) {
       console.error('Error :', JSON.stringify(error));
