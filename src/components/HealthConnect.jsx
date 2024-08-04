@@ -1,5 +1,7 @@
 import React from 'react';
 import useWebViewBridge from '../hooks/recordData';
+// import { Button } from '@headlessui/react';
+import Button from '../components/UI/Button.jsx';
 
 function getHealthConnectData() {
   if (window.android) {
@@ -13,7 +15,8 @@ function HealthConnect() {
 
   return (
     <>
-      <button onClick={getHealthConnectData}>Get HealthConnect Data</button>
+      <Button content='삼성 헬스 정보 가져오기' onClick={getHealthConnectData} />
+      {/* <button onClick={getHealthConnectData}>Get HealthConnect Data</button> */}
       <div id='i'></div>
     </>
   );
