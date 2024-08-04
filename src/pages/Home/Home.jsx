@@ -3,10 +3,10 @@ import HealthConnect from '../../components/HealthConnect.jsx';
 
 const HomePage = () => {
   return (
-    <>
+    <div>
       <ReportGraph />
-      {/* <HealthConnect /> */}
-    </>
+      <HealthConnect />
+    </div>
   );
 };
 
