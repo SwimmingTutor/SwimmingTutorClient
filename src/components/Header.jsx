@@ -31,7 +31,7 @@ const Header = () => {
   };
 
   return (
-    <header id='header' className='fixed top-0 z-40 bg-white shadow-md'>
+    <header id='header' className='fixed top-0 z-40 bg-white'>
       <div className='container mx-auto flex h-14 items-center justify-between px-5 lg:w-app'>
         <div className='flex max-w-[7rem] items-center'>{getHeaderType(headerType)}</div>
         <div className='flex space-x-4 text-xs'>
