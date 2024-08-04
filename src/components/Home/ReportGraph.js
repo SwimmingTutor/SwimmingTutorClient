@@ -28,7 +28,7 @@ const ReportGraph = () => {
   const noDataImagePath = require('../../assets/images/swim-graph-nodata.png');
 
   const categoryMapping = {
-    '랩 횟수': 'distance',
+    거리: 'distance',
     속도: 'speed',
     심박수: 'heartRate',
     칼로리: 'calories'
@@ -54,8 +54,8 @@ const ReportGraph = () => {
 
             acc[formattedDate][category] = value;
             return acc;
-          }, {});
-
+        }, {});
+        
         const maxValues = response.data.reduce((acc, item) => {
           const category = item.category;
           const value = item.value;
@@ -187,7 +187,7 @@ const ReportGraph = () => {
           }}
         >
           <option value='all'>전체</option>
-          <option value='distance'>랩 횟수</option>
+          <option value='distance'>거리</option>
           <option value='speed'>속도</option>
           <option value='heartRate'>심박수</option>
           <option value='calories'>칼로리</option>
@@ -283,7 +283,6 @@ const ReportGraph = () => {
           </ResponsiveContainer>
         </div>
       )}
-
       {blankDiv}
       <PageTitle title='나의 기록' />
       <div
@@ -296,7 +295,7 @@ const ReportGraph = () => {
           marginLeft: '10%'
         }}
       >
-        {['랩 횟수', '속도', '심박수', '칼로리'].map((category, index) => (
+        {['거리(m)', '속도(m/s)', '심박수(bpm)', '칼로리(kcal)'].map((category, index) => (
           <div key={category} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
             <img
               src={imagePaths[index]}
