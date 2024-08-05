@@ -31,8 +31,8 @@ const optionsList = {
     3: [
       { key: '기본 자세', value: 1 },
       { key: '양측 호흡', value: 2 },
-      { key: '사이드 턴', value: 3 },
-      { key: '플립 턴', value: 4 }
+      { key: '사이드 턴', value: 2 },
+      { key: '플립 턴', value: 3 }
     ]
   },
   backstroke: {
@@ -49,8 +49,8 @@ const optionsList = {
     3: [
       { key: '기본 자세', value: 1 },
       { key: '안정적 자세', value: 2 },
-      { key: '배영 턴', value: 3 },
-      { key: '크로스 오버 턴', value: 4 }
+      { key: '배영 턴', value: 2 },
+      { key: '크로스 오버 턴', value: 3 }
     ]
   },
   breathstroke: {
