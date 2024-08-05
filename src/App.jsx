@@ -1,5 +1,5 @@
 // import { RouterProvider, useRoutes } from 'react-router-dom';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, Navigate, redirect } from 'react-router-dom';
 import { HeaderProvider } from './context/HeaderContext.jsx';
 
 import PageContainer from './containers/PageContainer.jsx';
@@ -33,6 +33,17 @@ import TermsPage from './pages/Oauth/Terms.jsx';
 
 import RegisterPage from './pages/Register/Index.jsx';
 import { action as signupAction } from './pages/Register/Index.jsx';
+
+const isLogined = () => {
+  return localStorage.getItem('accessToken') !== null;
+};
+const ProtectedRoute = ({ children }) => {
+  if (!isLogined()) {
+    return <Navigate to='/accounts/login' replace />;
+  }
+  return children;
+};
+
 const router = createBrowserRouter([
   {
     /// default page layout
@@ -40,7 +51,6 @@ const router = createBrowserRouter([
     path: '/',
     element: <PageContainer />,
     errorElement: <ErrorPage />,
-    // TODO: 인증 loader-tokenLoader 정의
     children: [
       // Home
       {
@@ -56,7 +66,11 @@ const router = createBrowserRouter([
       // SwimmingPool
       {
         path: 'swimmingpool',
-        element: <SwimmingpoolContainer />,
+        element: (
+          <ProtectedRoute>
+            <SwimmingpoolContainer />
+          </ProtectedRoute>
+        ),
         children: [
           {
             index: true,
@@ -67,7 +81,11 @@ const router = createBrowserRouter([
       // Routine
       {
         path: 'routine',
-        element: <RoutineContainer />,
+        element: (
+          <ProtectedRoute>
+            <RoutineContainer />
+          </ProtectedRoute>
+        ),
         children: [
           {
             path: '',
@@ -90,7 +108,11 @@ const router = createBrowserRouter([
       // My
       {
         path: 'my',
-        element: <MyContainer />,
+        element: (
+          <ProtectedRoute>
+            <MyContainer />
+          </ProtectedRoute>
+        ),
         children: [
           {
             path: '',
