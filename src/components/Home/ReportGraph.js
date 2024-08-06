@@ -30,8 +30,7 @@ const ReportGraph = () => {
   const categoryMapping = {
     거리: 'distance',
     속도: 'speed',
-    심박수: 'heartRate',
-    칼로리: 'calories'
+    심박수: 'heartRate'
   };
 
   useEffect(() => {
@@ -54,8 +53,8 @@ const ReportGraph = () => {
 
             acc[formattedDate][category] = value;
             return acc;
-        }, {});
-        
+          }, {});
+
         const maxValues = response.data.reduce((acc, item) => {
           const category = item.category;
           const value = item.value;
@@ -126,7 +125,7 @@ const ReportGraph = () => {
   };
 
   const renderLines = () => {
-    const categories = ['distance', 'speed', 'heartRate', 'calories'];
+    const categories = ['distance', 'speed', 'heartRate'];
 
     if (selectedCategory === 'all') {
       return categories.map(category => (
@@ -160,8 +159,6 @@ const ReportGraph = () => {
         return '#82ca9d';
       case 'heartRate':
         return '#ffc658';
-      case 'calories':
-        return '#ff7300';
       default:
         return '#000000';
     }
@@ -190,7 +187,6 @@ const ReportGraph = () => {
           <option value='distance'>거리</option>
           <option value='speed'>속도</option>
           <option value='heartRate'>심박수</option>
-          <option value='calories'>칼로리</option>
         </select>
       </div>
 
@@ -295,7 +291,7 @@ const ReportGraph = () => {
           marginLeft: '10%'
         }}
       >
-        {['거리(m)', '속도(m/s)', '심박수(bpm)', '칼로리(kcal)'].map((category, index) => (
+        {['거리(m)', '속도(m/s)', '심박수(bpm)'].map((category, index) => (
           <div key={category} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
             <img
               src={imagePaths[index]}
