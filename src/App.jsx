@@ -22,8 +22,8 @@ import MyPage from './pages/My/My.jsx';
 import RecordPage from './pages/My/Record.jsx';
 import ProfilePage from './pages/My/Profile.jsx';
 import ExperiencePage from './pages/My/Experience.jsx';
-import MyLevelPage from './pages/my/MyLevel.jsx';
-import LevelTestPage from './pages/my/LevelTest.jsx';
+import MyLevelPage from './pages/My/MyLevel.jsx';
+import LevelTestPage from './pages/My/LevelTest.jsx';
 
 import AccountsContainer from './containers/AccountsContainer.jsx';
 import LoginPage from './pages/Oauth/Login.jsx';
