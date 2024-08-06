@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 const InputText = ({
   name,
@@ -14,14 +14,14 @@ const InputText = ({
     setInternalValue(defaultValue);
   }, [defaultValue]);
 
-  const handleChange = (event) => {
+  const handleChange = event => {
     const value = event.target.value;
     setInternalValue(value);
   };
 
   const handleBlur = () => {
     onChange(internalValue);
-  }
+  };
 
   // TODO: default 제거
   return (

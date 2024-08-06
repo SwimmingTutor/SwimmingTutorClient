@@ -19,13 +19,15 @@ const LevelList = () => {
       const data = response.data;
       // console.log('data: ', data);
 
-      setLevels(prevLevels => prevLevels.map(level => {
-        const matchingData = data.find(item => item.lcTrainingName === level.name);
-        if (matchingData) {
-          return { ...level, level: matchingData.userLevel };
-        }
-        return level;
-      }));
+      setLevels(prevLevels =>
+        prevLevels.map(level => {
+          const matchingData = data.find(item => item.lcTrainingName === level.name);
+          if (matchingData) {
+            return { ...level, level: matchingData.userLevel };
+          }
+          return level;
+        })
+      );
       // console.log('2 levels: ', levels);
     } catch (err) {
       setError('Failed to fetch levels. Please try again.');

@@ -1,5 +1,3 @@
-import axios from '../../utils/https/axios/customAxios';
-import DividerWithText from '../../components/DividerWitdhText.jsx';
 import Button from '../../components/UI/Button.jsx';
 import CenterWrapper from '../../components/Layout/CenterWrapper.jsx';
 import logo from '../../assets/images/g-logo.png';
@@ -11,20 +9,6 @@ const onGoogleLogin = () => {
     return;
   }
   window.location.href = `${apiUrl}/oauth2/authorization/google`;
-};
-
-
-const getData = async () => {
-  await axios
-    .get('level/log', {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-      }
-    })
-    .then(res => {
-      console.log(res.data);
-    })
-    .catch(error => console.log(error));
 };
 
 const LoginPage = () => {
