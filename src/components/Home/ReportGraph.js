@@ -21,7 +21,7 @@ const ReportGraph = () => {
   const [allDataEmpty, setAllDataEmpty] = useState(false);
   const [dateRange, setDateRange] = useState('');
   const [pageIndex, setPageIndex] = useState(0);
-  const [isUnauthorized, setIsUnauthorized] = useState(false); // 로그인 여부 확인 상태 추가
+  const [isUnauthorized, setIsUnauthorized] = useState(false);
 
   const images = ['lap_count.png', 'speed.png', 'heart_rate.png', 'carlory.png'];
   const imagePaths = images.map(image => require(`../../assets/images/${image}`));
@@ -37,6 +37,7 @@ const ReportGraph = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get('/report');
+        console.log('Fetched Data:', response.data); // 디버깅용 출력
 
         const transformedData = response.data
           .filter(item => Object.values(categoryMapping).includes(item.category))
@@ -66,6 +67,8 @@ const ReportGraph = () => {
           return acc;
         }, {});
 
+        console.log('Max Values:', maxValues); // 디버깅용 출력
+
         const allEmpty = Object.keys(maxValues).every(
           key => maxValues[key] === undefined || maxValues[key] === null || maxValues[key] === ''
         );
@@ -74,8 +77,6 @@ const ReportGraph = () => {
         const sortedData = Object.values(transformedData).sort((a, b) => a.name - b.name);
         setData(sortedData);
         setMaxValues(maxValues);
-
-        console.log('Max Values:', maxValues);
 
         if (sortedData.length > 0) {
           setDateRangeForPage(sortedData, 0);
@@ -300,8 +301,8 @@ const ReportGraph = () => {
             />
             <span style={{ flex: 1 }}>{category}</span>
             <span style={{ flex: 1, textAlign: 'left' }}>
-              {maxValues[categoryMapping[category]] !== undefined
-                ? maxValues[categoryMapping[category]]
+              {maxValues[categoryMapping[category.split('(')[0]]] !== undefined
+                ? maxValues[categoryMapping[category.split('(')[0]]]
                 : '데이터가 없습니다'}
             </span>
           </div>
