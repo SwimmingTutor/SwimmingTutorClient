@@ -3,15 +3,14 @@ import useWebViewBridge from '../hooks/recordData';
 // import { Button } from '@headlessui/react';
 import Button from '../components/UI/Button.jsx';
 
-function getHealthConnectData() {
-  if (window.android) {
-    healthConnectJsInterface.getDataRecords('2024-06-21T12:33:08.649878');
-    console.log('a');
-  }
-}
+const getHealthConnectData = () => {
+  healthConnectJsInterface.getDataRecords('2024-06-01T12:00:00.000');
+};
 
 function HealthConnect() {
   useWebViewBridge();
+
+  if (!window.android) return;
 
   return (
     <>
