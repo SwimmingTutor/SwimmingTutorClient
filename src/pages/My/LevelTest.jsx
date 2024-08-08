@@ -52,7 +52,7 @@ const LevelTestPage = () => {
           }
         );
       } else {
-        await fastApiAxios.post('/level/log', {
+        await fastApiAxios.post('/lvtest', {
           style: strokeName,
           distance: selectedValues[0],
           speed: selectedValues[1],
