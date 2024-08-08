@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from '../../utils/https/axios/customAxios';
+import { customAxios } from '../../utils/https/axios/customAxios';
 import PageTitle from '../../components/PageTitle.jsx';
 import Steps from '../../components/UI/Steps.jsx';
 import usePageSetup from '../../hooks/usePageSetup.js';
 import Button from '../../components/UI/Button.jsx';
 import TestForm from '../../components/My/TestForm.jsx';
 import SWIMTERMS from '../../constants/swimTerms.js';
+import { fastApiAxios } from '../../utils/https/axios/customAxios';
 
 const LevelTestPage = () => {
   const param = useParams();
@@ -35,20 +36,29 @@ const LevelTestPage = () => {
       setCurrentStep(currentStep + 1);
       return;
     }
-    // Request to the server with axios
+    // Request to the server with customAxios
     try {
       const strokeNames = SWIMTERMS;
       const strokeName = strokeNames.find(stroke => stroke.key === param.strokename)?.name;
 
-      await axios.post(
-        '/level/log',
-        {
+      if (currentStep != steps.length) {
+        await customAxios.post(
+          '/level/log',
+          {
+            style: strokeName,
+            distance: selectedValues[0],
+            speed: selectedValues[1],
+            technique: selectedValues[2]
+          }
+        );
+      } else {
+        await fastApiAxios.post('/lvtest', {
           style: strokeName,
           distance: selectedValues[0],
           speed: selectedValues[1],
           technique: selectedValues[2]
-        }
-      );
+        });
+      }
 
       // Redirect to /my/level page
       window.location.href = '/my/level';

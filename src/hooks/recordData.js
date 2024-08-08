@@ -1,10 +1,10 @@
 import { useEffect, useCallback } from 'react';
-import axios from '../utils/https/axios/customAxios';
+import { customAxios } from '../utils/https/axios/customAxios';
 
 function useWebViewBridge() {
   const sendDataToServer = useCallback(async parsedData => {
     try {
-      const response = await axios.post('record/test', { data: parsedData.flat() });
+      const response = await customAxios.post('record/test', { data: parsedData.flat() });
       console.log('Server response:', response.data);
     } catch (error) {
       console.error('Error :', JSON.stringify(error));

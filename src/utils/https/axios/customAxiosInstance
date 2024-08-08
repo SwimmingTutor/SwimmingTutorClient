@@ -1,0 +1,70 @@
+import axios from 'axios';
+
+const refreshAccessToken = async baseURL => {
+  const oldAccessToken = localStorage.getItem('accessToken');
+  const oldRefreshToken = localStorage.getItem('refreshToken');
+
+  try {
+    const response = await axios.post(`${baseURL}/refreshToken`, {
+      accessToken: oldAccessToken,
+      refreshToken: oldRefreshToken
+    });
+    const { accessToken, refreshToken } = response.data;
+    localStorage.setItem('accessToken', accessToken);
+    localStorage.setItem('refreshToken', refreshToken);
+    return accessToken;
+  } catch (err) {
+    console.error('Token refresh error:', err);
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    window.location.href = '/accounts/login';
+    return err;
+  }
+};
+
+const createAxiosInstance = baseURL => {
+  const instance = axios.create({
+    baseURL,
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+
+  instance.interceptors.request.use(
+    async config => {
+      const accessToken = localStorage.getItem('accessToken');
+      if (accessToken) {
+        config.headers['Authorization'] = `Bearer ${accessToken}`;
+      }
+      return config;
+    },
+    error => {
+      return Promise.reject(error);
+    }
+  );
+
+  instance.interceptors.response.use(
+    response => response,
+    async error => {
+      const originalRequest = error.config;
+
+      if (error.response.status === 403 && error.response.data.msg === 'Expired Token') {
+        originalRequest._retry = true;
+
+        try {
+          const newAccessToken = await refreshAccessToken(baseURL);
+          originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
+          return instance(originalRequest);
+        } catch (refreshError) {
+          return Promise.reject(refreshError);
+        }
+      }
+
+      return Promise.reject(error);
+    }
+  );
+
+  return instance;
+};
+
+export default createAxiosInstance;

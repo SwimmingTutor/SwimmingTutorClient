@@ -5,7 +5,7 @@ import Button from '../../components/UI/Button.jsx';
 import InputText from '../../components/UI/InputText.jsx';
 import GenderRadio from '../../components/OAuth/GenderRadio.jsx';
 import usePageSetup from '../../hooks/usePageSetup.js';
-import axios from '../../utils/https/axios/customAxios';
+import { customAxios } from '../../utils/https/axios/customAxios';
 import SelectBox from '../../components/UI/SelectBox.jsx';
 // import TermsAgreement from '../../components/OAuth/TermsAgreement.jsx';
 
@@ -80,7 +80,7 @@ export async function action({ request }) {
 
   // TODO: 유효성 검사
   try {
-    const { data, status } = await axios.post('users', formData);
+    const { data, status } = await customAxios.post('users', formData);
 
     if (status === 200) {
       return redirect('/');

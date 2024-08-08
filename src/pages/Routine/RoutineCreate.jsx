@@ -5,7 +5,7 @@ import InputNumber from '../../components/Routine/InputNumber.jsx';
 import MultiSelectBox from '../../components/UI/MultiSelectBox.jsx';
 import InputText from '../../components/UI/InputText.jsx';
 import Button from '../../components/UI/Button.jsx';
-import axios from '../../utils/https/axios/customAxios';
+import { customAxios } from '../../utils/https/axios/customAxios';
 import { useNavigate } from 'react-router-dom';
 
 const RoutineCreatePage = () => {
@@ -47,9 +47,9 @@ const RoutineCreatePage = () => {
       alert('훈련할 영법을 선택해주세요 😅');
       return;
     }
-    // Request to the server with axios
+    // Request to the server with customAxios
     try {
-      const response = await axios.post('/routine', {
+      const response = await customAxios.post('/routine', {
         routineName: routineName,
         poolLength: poolLength,
         targetDistance: targetDistance,

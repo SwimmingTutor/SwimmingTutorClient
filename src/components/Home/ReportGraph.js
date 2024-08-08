@@ -10,7 +10,7 @@ import {
   ResponsiveContainer,
   ReferenceDot
 } from 'recharts';
-import axios from '../../utils/https/axios/customAxios';
+import { customAxios } from '../../utils/https/axios/customAxios';
 import moment from 'moment';
 import PageTitle from '../PageTitle.jsx';
 
@@ -36,7 +36,7 @@ const ReportGraph = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('/report');
+        const response = await customAxios.get('/report');
         console.log('Fetched Data:', response.data); // 디버깅용 출력
 
         const transformedData = response.data
