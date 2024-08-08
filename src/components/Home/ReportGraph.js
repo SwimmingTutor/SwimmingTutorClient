@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import moment from 'moment';
+import { customAxios } from '../../utils/https/axios/customAxios';
+import PageTitle from '../PageTitle.jsx';
 import {
   LineChart,
   Line,
@@ -10,11 +13,9 @@ import {
   ResponsiveContainer,
   ReferenceDot
 } from 'recharts';
-import { customAxios } from '../../utils/https/axios/customAxios';
-import moment from 'moment';
-import PageTitle from '../PageTitle.jsx';
 
 const ReportGraph = () => {
+  // 상태 변수 선언
   const [data, setData] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [maxValues, setMaxValues] = useState({});
@@ -23,83 +24,109 @@ const ReportGraph = () => {
   const [pageIndex, setPageIndex] = useState(0);
   const [isUnauthorized, setIsUnauthorized] = useState(false);
 
+  // 이미지 경로들
   const images = ['lap_count.png', 'speed.png', 'heart_rate.png', 'carlory.png'];
   const imagePaths = images.map(image => require(`../../assets/images/${image}`));
   const noDataImagePath = require('../../assets/images/swim-graph-nodata.png');
 
+  // 카테고리 매핑
   const categoryMapping = {
     거리: 'distance',
     속도: 'speed',
     심박수: 'heartRate'
   };
 
+  // 컴포넌트가 마운트될 때 데이터 가져오는 함수
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await customAxios.get('/report');
-        console.log('Fetched Data:', response.data); // 디버깅용 출력
-
-        const transformedData = response.data
-          .filter(item => Object.values(categoryMapping).includes(item.category))
-          .reduce((acc, item) => {
-            const { startTime } = item;
-            const category = item.category;
-            const value = item.value;
-
-            const formattedDate = moment(startTime).valueOf(); // Unix timestamp 사용
-
-            if (!acc[formattedDate]) {
-              acc[formattedDate] = { name: formattedDate };
-            }
-
-            acc[formattedDate][category] = value;
-            return acc;
-          }, {});
-
-        const maxValues = response.data.reduce((acc, item) => {
-          const category = item.category;
-          const value = item.value;
-
-          if (!acc[category] || value > acc[category]) {
-            acc[category] = value;
-          }
-
-          return acc;
-        }, {});
-
-        console.log('Max Values:', maxValues); // 디버깅용 출력
-
-        const allEmpty = Object.keys(maxValues).every(
-          key => maxValues[key] === undefined || maxValues[key] === null || maxValues[key] === ''
-        );
-        setAllDataEmpty(allEmpty);
-
-        const sortedData = Object.values(transformedData).sort((a, b) => a.name - b.name);
-        setData(sortedData);
-        setMaxValues(maxValues);
-
-        if (sortedData.length > 0) {
-          setDateRangeForPage(sortedData, 0);
-        }
-      } catch (error) {
-        if (error.response && error.response.status === 401) {
-          setIsUnauthorized(true); // 401 오류일 경우 로그인되지 않은 상태로 설정
-        } else {
-          console.error('Error fetching data:', error);
-        }
-      }
-    };
     fetchData();
   }, []);
 
+  // 데이터 가져오는 비동기 함수
+  const fetchData = async () => {
+    try {
+      const response = await customAxios.get('/report');
+      const transformedData = transformData(response.data);
+      const maxValues = calculateMaxValues(response.data);
+
+      // 모든 데이터가 비어 있는지 확인
+      const isAllDataEmpty = checkIfAllDataEmpty(maxValues);
+      setAllDataEmpty(isAllDataEmpty);
+
+      // Data와 maxValues 설정
+      if (isAllDataEmpty) {
+        setAllDataEmpty(true);
+        setData([]);
+        setMaxValues({});
+      } else {
+        setAllDataEmpty(false);
+        setData(transformedData);
+        setMaxValues(maxValues);
+      }
+
+      // 날짜 범위를 설정
+      if (transformedData.length > 0) {
+        setDateRangeForPage(transformedData, 0);
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        setIsUnauthorized(true);
+      } else {
+        console.error('Error fetching data:', error);
+      }
+    }
+  };
+
+  // 데이터 변환
+  const transformData = rawData => {
+    return rawData
+      .filter(item => Object.values(categoryMapping).includes(item.category))
+      .reduce((acc, item) => {
+        const { startTime } = item;
+        const category = item.category;
+        const value = item.value;
+
+        const formattedDate = moment(startTime).valueOf();
+
+        if (!acc[formattedDate]) {
+          acc[formattedDate] = { name: formattedDate };
+        }
+
+        acc[formattedDate][category] = value;
+        return acc;
+      }, {});
+  };
+
+  // 최대값 계산
+  const calculateMaxValues = rawData => {
+    return rawData.reduce((acc, item) => {
+      const category = item.category;
+      const value = item.value;
+
+      if (!acc[category] || value > acc[category]) {
+        acc[category] = value;
+      }
+
+      return acc;
+    }, {});
+  };
+
+  // 모든 데이터가 비어있는지 확인
+  const checkIfAllDataEmpty = maxValues => {
+    return Object.keys(maxValues).every(
+      key => maxValues[key] === undefined || maxValues[key] === null || maxValues[key] === ''
+    );
+  };
+
+
+  // 페이지에 해당하는 날짜 범위 설정
   const setDateRangeForPage = (data, pageIndex) => {
     const startIndex = pageIndex * 7;
     const endIndex = Math.min(startIndex + 7, data.length);
-    const pageData = data.slice(startIndex, endIndex);
+    const pageData = Object.values(data).slice(startIndex, endIndex);
 
     if (pageData.length > 0) {
       const startDate = moment(pageData[0].name);
-      const endDate = moment(startDate).add(6, 'days'); // 6일간의 날짜 범위를 계산
+      const endDate = moment(startDate).add(6, 'days');
       const dateRange = `${startDate.format('M.DD')} ~ ${endDate.format('M.DD')}`;
       setDateRange(dateRange);
     } else {
@@ -107,10 +134,12 @@ const ReportGraph = () => {
     }
   };
 
+  // 카테고리 변경 핸들러
   const handleCategoryChange = event => {
     setSelectedCategory(event.target.value);
   };
 
+  // 이전 페이지로 이동
   const handlePrevPage = () => {
     if (pageIndex > 0) {
       setPageIndex(pageIndex - 1);
@@ -118,6 +147,7 @@ const ReportGraph = () => {
     }
   };
 
+  // 다음 페이지로 이동
   const handleNextPage = () => {
     if ((pageIndex + 1) * 7 < data.length) {
       setPageIndex(pageIndex + 1);
@@ -125,6 +155,7 @@ const ReportGraph = () => {
     }
   };
 
+  // 그래프 라인 렌더링
   const renderLines = () => {
     const categories = ['distance', 'speed', 'heartRate'];
 
@@ -136,7 +167,7 @@ const ReportGraph = () => {
           dataKey={category}
           stroke={getColor(category)}
           name={category}
-          isAnimationActive={true} // '전체' 선택 시 애니메이션 활성화
+          isAnimationActive={true}
         />
       ));
     }
@@ -147,11 +178,12 @@ const ReportGraph = () => {
         dataKey={selectedCategory}
         stroke={getColor(selectedCategory)}
         name={selectedCategory}
-        isAnimationActive={false} // 다른 카테고리 선택 시 애니메이션 비활성화
+        isAnimationActive={false}
       />
     );
   };
 
+  // 카테고리별 색상 반환
   const getColor = category => {
     switch (category) {
       case 'distance':
@@ -165,6 +197,7 @@ const ReportGraph = () => {
     }
   };
 
+  // 빈 div 엘리먼트
   const blankDiv = <div className='h-7'></div>;
 
   return (
@@ -190,8 +223,7 @@ const ReportGraph = () => {
           <option value='heartRate'>심박수</option>
         </select>
       </div>
-
-      {allDataEmpty || isUnauthorized ? ( // 데이터가 없거나 로그인되지 않은 경우
+      {allDataEmpty || isUnauthorized ? (
         <div style={{ textAlign: 'center', marginTop: '20px' }}>
           <img
             src={noDataImagePath}
@@ -233,7 +265,7 @@ const ReportGraph = () => {
           </div>
           <ResponsiveContainer width='100%' height={300}>
             <LineChart
-              data={data.slice(pageIndex * 7, (pageIndex + 1) * 7)}
+              data={Object.values(data).slice(pageIndex * 7, (pageIndex + 1) * 7)}
               margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
             >
               <CartesianGrid strokeDasharray='3 3' />
@@ -273,7 +305,7 @@ const ReportGraph = () => {
               />
               <Legend />
               {renderLines()}
-              {data.map(d => (
+              {Object.values(data).map(d => (
                 <ReferenceDot key={d.name} x={d.name} y={d[selectedCategory]} r={4} fill='red' stroke='none' />
               ))}
             </LineChart>
