@@ -8,6 +8,7 @@ import Button from '../../components/UI/Button.jsx';
 import TestForm from '../../components/My/TestForm.jsx';
 import SWIMTERMS from '../../constants/swimTerms.js';
 import { fastApiAxios } from '../../utils/https/axios/customAxios';
+import BLANKDIV from '../../constants/blankDiv.js';
 
 const LevelTestPage = () => {
   const param = useParams();
@@ -17,8 +18,6 @@ const LevelTestPage = () => {
   const [selectedValues, setSelectedValues] = useState([0, 0, 0]);
   // console.log('selectedValues:', selectedValues);
 
-  const blankDiv3 = <div className='h-3'></div>;
-  const blankDiv5 = <div className='h-5'></div>;
   const steps = ['distance', 'speed', 'technique'];
 
   const handlePreviousStep = () => {
@@ -42,15 +41,12 @@ const LevelTestPage = () => {
       const strokeName = strokeNames.find(stroke => stroke.key === param.strokename)?.name;
 
       if (currentStep != steps.length) {
-        await customAxios.post(
-          '/level/log',
-          {
-            style: strokeName,
-            distance: selectedValues[0],
-            speed: selectedValues[1],
-            technique: selectedValues[2]
-          }
-        );
+        await customAxios.post('/level/log', {
+          style: strokeName,
+          distance: selectedValues[0],
+          speed: selectedValues[1],
+          technique: selectedValues[2]
+        });
       } else {
         await fastApiAxios.post('/lvtest', {
           style: strokeName,
@@ -75,18 +71,18 @@ const LevelTestPage = () => {
   };
 
   return (
-    <>
+    <div className='px-7'>
       <PageTitle title={`수영 레벨 테스트`} />
-      {blankDiv5}
+      {BLANKDIV[5]}
       <Steps key={currentStep} steps={steps} currentStep={currentStep} />
-      {blankDiv3}
+      {BLANKDIV[2]}
       <TestForm
         strokename={param.strokename}
         currentStep={currentStep}
         onOptionSelect={handleOptionSelect}
         selectedValues={selectedValues}
       />
-      {blankDiv3}
+      {BLANKDIV[2]}
       <div className='mt-4 flex justify-between'>
         {/* <Button
           key='prev'
@@ -96,7 +92,7 @@ const LevelTestPage = () => {
         /> */}
         <Button key='next' onClick={handleNextStep} content={currentStep === steps.length ? '결과확인' : '다음'} />
       </div>
-    </>
+    </div>
   );
 };
 

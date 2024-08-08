@@ -7,6 +7,7 @@ import SWIMTERMS from '../../constants/swimTerms.js';
 import usePageSetup from '../../hooks/usePageSetup.js';
 import InputText from '../../components/UI/InputText.jsx';
 import SelectBox from '../../components/UI/SelectBox.jsx';
+import BLANKDIV from '../../constants/blankDiv.js';
 
 const LevelTestPage = () => {
   const { strokename } = useParams();
@@ -19,9 +20,6 @@ const LevelTestPage = () => {
   };
 
   const strokeNameInKorean = translateStrokeName(strokename);
-
-  const blankDiv1 = <div className='h-7'></div>;
-  const blankDiv2 = <div className='h-14'></div>;
 
   const questions = {
     1: `50분 동안 ${strokeNameInKorean}으로 완주할 수 있는 거리를 입력해주세요.`,
@@ -90,14 +88,14 @@ const LevelTestPage = () => {
   };
 
   return (
-    <div>
+    <div className='px-7'>
       <PageTitle title={`수영 레벨 테스트`} />
-      {blankDiv1}
+      {BLANKDIV[6]}
       {error && <div className='error-message'>{error}</div>}
       <InputText name='distance' label={questions[1]} placeholder='예: 800' value={distance} onChange={setDistance} />
-      {blankDiv1}
+      {BLANKDIV[6]}
       <InputText name='speed' label={questions[2]} placeholder='예: 60' value={speed} onChange={setSpeed} />
-      {blankDiv1}
+      {BLANKDIV[6]}
       <SelectBox
         label={questions[3]}
         placeholder={'선택해주세요'}
@@ -105,10 +103,7 @@ const LevelTestPage = () => {
         value={technique || techniqueOptions[0]}
         onChange={setTechnique}
       />
-      {blankDiv1}
-      {blankDiv2}
-      {blankDiv2}
-      {blankDiv2}
+      {BLANKDIV[10]}
       <Button size='large' content='결과확인' onClick={handleSubmit} />
     </div>
   );

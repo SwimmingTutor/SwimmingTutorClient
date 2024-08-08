@@ -8,6 +8,7 @@ import GenderRadio from '../../components/OAuth/GenderRadio.jsx';
 import Nav from '../../components/Nav.jsx';
 import usePageSetup from '../../hooks/usePageSetup.js';
 import { customAxios } from '../../utils/https/axios/customAxios';
+import BLANKDIV from '../../constants/blankDiv.js';
 
 // TODO: 로그인시 헤더 '로그아웃' 노출
 const ProfilePage = () => {
@@ -59,9 +60,6 @@ const ProfilePage = () => {
     deleteAccountModalRef.current.open();
   };
 
-  const blankDiv1 = <div className='h-7'></div>;
-  const blankDiv2 = <div className='h-14'></div>;
-
   return (
     <>
       <OAuthHeader headerType='profile' off='true' />
@@ -69,21 +67,21 @@ const ProfilePage = () => {
         <p>
           <b>*</b> 항목은 필수 입력사항입니다.
         </p>
-        {blankDiv1}
+        {BLANKDIV[6]}
         <InputText label='닉네임 *' defaultValue={name} placeholder='닉네임' onChange={setName} />
-        {blankDiv1}
+        {BLANKDIV[6]}
         {/* TODO: 성별 - select box로 변경 */}
         {/* <InputText label='성별' placeholder='성별' /> */}
         <GenderRadio value={gender} label='성별 *' onChange={setGender}></GenderRadio>
-        {blankDiv1}
+        {BLANKDIV[6]}
         <InputText type='date' defaultValue={birth} label='생년월일 *' onChange={setBirth} />
-        {blankDiv1}
+        {BLANKDIV[6]}
         <InputText type='number' defaultValue={height} label='신장(cm)' placeholder='신장' onChange={setHeight} />
-        {blankDiv1}
+        {BLANKDIV[6]}
         <InputText type='number' defaultValue={weight} label='체중(kg)' placeholder='체중' onChange={setWeight} />
-        {blankDiv2}
+        {BLANKDIV[8]}
         <Button content='완료' onClick={onClick}></Button>
-        {blankDiv1}
+        {BLANKDIV[6]}
         {/* <a className='mt-4 flex justify-center' onClick={handleOpenAccountModal}>
           <span className='text-sm text-gray-500 underline'>계정 삭제</span>
         </a> */}

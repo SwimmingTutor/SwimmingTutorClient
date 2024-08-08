@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import { customAxios } from '../../utils/https/axios/customAxios';
 import PageTitle from '../PageTitle.jsx';
+import BLANKDIV from '../../constants/blankDiv.js';
 import {
   LineChart,
   Line,
@@ -117,7 +118,6 @@ const ReportGraph = () => {
     );
   };
 
-
   // 페이지에 해당하는 날짜 범위 설정
   const setDateRangeForPage = (data, pageIndex) => {
     const startIndex = pageIndex * 7;
@@ -197,13 +197,10 @@ const ReportGraph = () => {
     }
   };
 
-  // 빈 div 엘리먼트
-  const blankDiv = <div className='h-7'></div>;
-
   return (
     <div style={{ width: '100%', height: 'auto', minHeight: '600px' }}>
       <PageTitle title='분석 보고서' />
-      <div style={{ marginBottom: '20px' }}>
+      <div className='px-7'>
         <label htmlFor='categorySelect'>카테고리 선택: </label>
         <select
           id='categorySelect'
@@ -312,7 +309,7 @@ const ReportGraph = () => {
           </ResponsiveContainer>
         </div>
       )}
-      {blankDiv}
+      {BLANKDIV[6]}
       <PageTitle title='나의 기록' />
       <div
         style={{

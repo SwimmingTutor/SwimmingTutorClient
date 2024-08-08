@@ -5,14 +5,13 @@ import { customAxios } from '../../utils/https/axios/customAxios';
 import usePageSetup from '../../hooks/usePageSetup.js';
 import PageTitle from '../../components/PageTitle.jsx';
 import Button from '../../components/UI/Button.jsx';
+import BLANKDIV from '../../constants/blankDiv.js';
 
 const RoutineDetailPage = () => {
   usePageSetup('routine-routineNo');
 
   const navigate = useNavigate();
   const { routineNo } = useParams();
-  const blankDiv5 = <div className='h-5' />;
-  const blankDiv10 = <div className='h-10' />;
 
   const [routineInfo, setRoutineInfo] = useState({
     routineName: '',
@@ -93,7 +92,7 @@ const RoutineDetailPage = () => {
   return (
     <div>
       <PageTitle title={routineInfo.routineName} />
-      {blankDiv5}
+      {BLANKDIV[5]}
       <table className='min-w-full border border-gray-300 bg-white'>
         <tbody>
           <InfoRow label='레인길이' value={`${routineInfo.poolLength}m`} />
@@ -103,12 +102,12 @@ const RoutineDetailPage = () => {
           <InfoRow label='수정일시' value={formatDate(routineInfo.updated)} />
         </tbody>
       </table>
-      {blankDiv5}
+      {BLANKDIV[5]}
       <div className='mt-4 flex justify-between'>
         <Button key='delete' onClick={handleDelete} content='삭제' type='cancel' />
         <Button key='update' onClick={handleUpdate} content='수정' />
       </div>
-      {blankDiv10}
+      {BLANKDIV[7]}
       <div className='grid gap-4'>
         {sessionName.map((name, index) => (
           <SessionData key={name} title={name} data={categorizedData[index]} />

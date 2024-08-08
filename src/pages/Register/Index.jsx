@@ -7,6 +7,7 @@ import GenderRadio from '../../components/OAuth/GenderRadio.jsx';
 import usePageSetup from '../../hooks/usePageSetup.js';
 import { customAxios } from '../../utils/https/axios/customAxios';
 import SelectBox from '../../components/UI/SelectBox.jsx';
+import BLANKDIV from '../../constants/blankDiv.js';
 // import TermsAgreement from '../../components/OAuth/TermsAgreement.jsx';
 
 const strokeOptions = ['자유형', '배영', '평영', '접영'];
@@ -26,9 +27,6 @@ const ProfilePage = () => {
     setMainGoal(value);
   };
 
-  const blankDiv1 = <div className='h-7'></div>;
-  const blankDiv2 = <div className='h-14'></div>;
-
   return (
     <>
       <OAuthHeader headerType='join' off='true' />
@@ -37,17 +35,17 @@ const ProfilePage = () => {
           <b>*</b> 항목은 필수 입력사항입니다.
         </p>
         <Form method='post' className='px-7'>
-          {blankDiv1}
+          {BLANKDIV[6]}
           <InputText name='name' label='닉네임 *' placeholder='닉네임' onChange={() => {}} />
-          {blankDiv1}
+          {BLANKDIV[6]}
           <GenderRadio name='gender' label='성별 *'></GenderRadio>
-          {blankDiv1}
+          {BLANKDIV[6]}
           <InputText name='birth' type='date' label='생년월일 *' placeholder='닉네임' onChange={() => {}} />
-          {blankDiv1}
+          {BLANKDIV[6]}
           <InputText name='height' type='number' label='신장(cm)' placeholder='신장' onChange={() => {}} />
-          {blankDiv1}
+          {BLANKDIV[6]}
           <InputText name='weight' type='number' label='체중(kg)' placeholder='체중' onChange={() => {}} />
-          {blankDiv1}
+          {BLANKDIV[6]}
           <input type='text' className='hidden' name='preference' value={preference} readOnly></input>
           <input type='text' className='hidden' name='goal' value={mainGoal} readOnly></input>
           <SelectBox
@@ -56,14 +54,14 @@ const ProfilePage = () => {
             selectOption={strokeOptions}
             onChange={handleStrokeChange}
           ></SelectBox>
-          {blankDiv1}
+          {BLANKDIV[6]}
           <SelectBox
             label='주요 목표 *'
             value={mainGoal}
             selectOption={purposeOptions}
             onChange={handleGoalChange}
           ></SelectBox>
-          {blankDiv2}
+          {BLANKDIV[8]}
           <Button content='완료'></Button>
         </Form>
       </div>

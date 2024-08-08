@@ -1,13 +1,10 @@
 import PageTitle from '../PageTitle.jsx';
-import Button from '../UI/Button.jsx';
-
-const blankDiv1 = <div className='h-1' />;
-const blankDiv2 = <div className='h-2' />;
+import BLANKDIV from '../../constants/blankDiv.js';
 
 const SessionData = ({ title, data }) => {
   return (
     <div className='mx-2'>
-      <div className='mt-2 mb-2 text-sm !text-sm'>
+      <div className='mb-2 mt-2 !text-sm text-sm'>
         <PageTitle title={title} />
       </div>
       <table className='min-w-full border border-gray-300 bg-white'>
@@ -37,8 +34,7 @@ const SessionData = ({ title, data }) => {
           )}
         </tbody>
       </table>
-      {blankDiv1}
-      
+      {BLANKDIV[0]}
     </div>
   );
 };

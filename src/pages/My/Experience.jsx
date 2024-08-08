@@ -6,6 +6,7 @@ import SelectBox from '../../components/UI/SelectBox.jsx';
 import Nav from '../../components/Nav.jsx';
 import usePageSetup from '../../hooks/usePageSetup.js';
 import { customAxios } from '../../utils/https/axios/customAxios';
+import BLANKDIV from '../../constants/blankDiv.js';
 
 const strokeOptions = ['자유형', '배영', '평영', '접영'];
 const purposeOptions = ['다이어트', '근력 강화', '건강 증진', '재활'];
@@ -50,10 +51,6 @@ const ExperiencePage = () => {
     }
   };
 
-  const blankDiv1 = <div className='h-7'></div>;
-  const blankDiv2 = <div className='h-14'></div>;
-  const blankDiv3 = <div className='h-20'></div>;
-
   let content = '';
 
   if (preference === 0 || goal.length === 0) {
@@ -63,21 +60,21 @@ const ExperiencePage = () => {
       <>
         <OAuthHeader headerType='experience' off='true' />
         <div className='px-7'>
-          {blankDiv2}
+          {BLANKDIV[8]}
           <SelectBox
             label='선호 영법'
             value={preference}
             selectOption={strokeOptions}
             onChange={handleStrokeChange}
           ></SelectBox>
-          {blankDiv1}
+          {BLANKDIV[6]}
           <SelectBox
             label='주요 목표'
             value={goal}
             selectOption={purposeOptions}
             onChange={handleGoalChange}
           ></SelectBox>
-          {blankDiv3}
+          {BLANKDIV[9]}
           <Button content='완료' onClick={save}></Button>
         </div>
         {/* TODO: login시에만 Nav 노출 */}
