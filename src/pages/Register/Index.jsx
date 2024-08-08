@@ -31,37 +31,42 @@ const ProfilePage = () => {
 
   return (
     <>
-      <OAuthHeader headerType='profile' off='true' />
-
-      <Form method='post' className='px-7'>
-        <InputText name='name' label='닉네임' placeholder='닉네임' onChange={() => {}} />
-        {blankDiv1}
-        <GenderRadio name='gender' label='성별'></GenderRadio>
-        {blankDiv1}
-        <InputText name='birth' type='date' label='생년월일' placeholder='닉네임' onChange={() => {}} />
-        {blankDiv1}
-        <InputText name='height' type='number' label='신장(cm)' placeholder='신장' onChange={() => {}} />
-        {blankDiv1}
-        <InputText name='weight' type='number' label='체중(kg)' placeholder='체중' onChange={() => {}} />
-        {blankDiv1}
-        <input type='text' className='hidden' name='preference' value={preference} readOnly></input>
-        <input type='text' className='hidden' name='goal' value={mainGoal} readOnly></input>
-        <SelectBox
-          label='선호 영법'
-          value={preference}
-          selectOption={strokeOptions}
-          onChange={handleStrokeChange}
-        ></SelectBox>
-        {blankDiv1}
-        <SelectBox
-          label='주요 목표'
-          value={mainGoal}
-          selectOption={purposeOptions}
-          onChange={handleGoalChange}
-        ></SelectBox>
-        {blankDiv2}
-        <Button content='완료'></Button>
-      </Form>
+      <OAuthHeader headerType='join' off='true' />
+      <div className='px-7'>
+        <p>
+          <b>*</b> 항목은 필수 입력사항입니다.
+        </p>
+        <Form method='post' className='px-7'>
+          {blankDiv1}
+          <InputText name='name' label='닉네임 *' placeholder='닉네임' onChange={() => {}} />
+          {blankDiv1}
+          <GenderRadio name='gender' label='성별 *'></GenderRadio>
+          {blankDiv1}
+          <InputText name='birth' type='date' label='생년월일 *' placeholder='닉네임' onChange={() => {}} />
+          {blankDiv1}
+          <InputText name='height' type='number' label='신장(cm)' placeholder='신장' onChange={() => {}} />
+          {blankDiv1}
+          <InputText name='weight' type='number' label='체중(kg)' placeholder='체중' onChange={() => {}} />
+          {blankDiv1}
+          <input type='text' className='hidden' name='preference' value={preference} readOnly></input>
+          <input type='text' className='hidden' name='goal' value={mainGoal} readOnly></input>
+          <SelectBox
+            label='선호 영법 *'
+            value={preference}
+            selectOption={strokeOptions}
+            onChange={handleStrokeChange}
+          ></SelectBox>
+          {blankDiv1}
+          <SelectBox
+            label='주요 목표 *'
+            value={mainGoal}
+            selectOption={purposeOptions}
+            onChange={handleGoalChange}
+          ></SelectBox>
+          {blankDiv2}
+          <Button content='완료'></Button>
+        </Form>
+      </div>
     </>
   );
 };

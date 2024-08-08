@@ -7,6 +7,7 @@ function getHeaderType(type) {
   return {
     home: <Logo />,
     terms: <PageTitle title='약관동의'></PageTitle>,
+    join: <PageTitle title='회원가입'></PageTitle>,
     profile: <PageTitle title='프로필 설정'></PageTitle>,
     experience: <PageTitle title='수영 경험 설정'></PageTitle>
   }[type];

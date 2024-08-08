@@ -66,14 +66,17 @@ const ProfilePage = () => {
     <>
       <OAuthHeader headerType='profile' off='true' />
       <div className='px-7'>
-        {/* {blankDiv2} */}
-        <InputText label='닉네임' defaultValue={name} placeholder='닉네임' onChange={setName} />
+        <p>
+          <b>*</b> 항목은 필수 입력사항입니다.
+        </p>
+        {blankDiv1}
+        <InputText label='닉네임 *' defaultValue={name} placeholder='닉네임' onChange={setName} />
         {blankDiv1}
         {/* TODO: 성별 - select box로 변경 */}
         {/* <InputText label='성별' placeholder='성별' /> */}
-        <GenderRadio value={gender} label='성별' onChange={setGender}></GenderRadio>
+        <GenderRadio value={gender} label='성별 *' onChange={setGender}></GenderRadio>
         {blankDiv1}
-        <InputText type='date' defaultValue={birth} label='생년월일' onChange={setBirth} />
+        <InputText type='date' defaultValue={birth} label='생년월일 *' onChange={setBirth} />
         {blankDiv1}
         <InputText type='number' defaultValue={height} label='신장(cm)' placeholder='신장' onChange={setHeight} />
         {blankDiv1}
