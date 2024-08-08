@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Listbox, ListboxButton, ListboxOptions, ListboxOption, Label } from '@headlessui/react';
+import { Listbox, ListboxButton, ListboxOptions, ListboxOption, Label, placeholder } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 
 const SelectBox = ({ label, selectOption, onChange, value }) => {
@@ -22,7 +22,9 @@ const SelectBox = ({ label, selectOption, onChange, value }) => {
             <div className='relative mt-2'>
               <ListboxButton className='relative w-full cursor-default rounded-md bg-white py-1.5 pl-1 pr-10 text-left shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500 sm:text-sm sm:leading-6'>
                 <span className='flex items-center'>
-                  <span className='ml-3 block truncate text-zinc-700'>{selected}</span>
+                  <span className='ml-3 block truncate text-zinc-700'>
+                    {selected || placeholder}
+                  </span>
                 </span>
                 <span className='pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2'>
                   <ChevronDownIcon className='h-5 w-5' aria-hidden='true' />

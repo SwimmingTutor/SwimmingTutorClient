@@ -33,6 +33,8 @@ import TermsPage from './pages/Oauth/Terms.jsx';
 
 import RegisterPage from './pages/Register/Index.jsx';
 import { action as signupAction } from './pages/Register/Index.jsx';
+import LevelTestRAG from './pages/My/LevelTestRAG.jsx';
+import LevelTestResult from './pages/My/LevelTestResult.jsx';
 
 const isLogined = () => {
   return localStorage.getItem('accessToken') !== null;
@@ -132,7 +134,12 @@ const router = createBrowserRouter([
           },
           {
             path: 'level/test/:strokename',
-            element: <LevelTestPage />
+            // element: <LevelTestPage />
+            element: <LevelTestRAG />
+          },
+          {
+            path: 'level/test/result',
+            element: <LevelTestResult />
           },
           {
             path: 'record',
