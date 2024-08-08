@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import Menu from '../Menu.jsx';
-import axios from '../../utils/https/axios/customAxios';
+import { customAxios } from '../../utils/https/axios/customAxios';
 import INITIALLEVELS from '../../constants/initialLevels.js';
 
 const LevelList = () => {
@@ -11,7 +11,7 @@ const LevelList = () => {
   // console.log('1 levels: ', levels);
   const fetchData = useCallback(async () => {
     try {
-      const response = await axios.get('/level', {
+      const response = await customAxios.get('/level', {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('accessToken')}`
         }

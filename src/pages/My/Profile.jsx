@@ -7,7 +7,7 @@ import InputText from '../../components/UI/InputText.jsx';
 import GenderRadio from '../../components/OAuth/GenderRadio.jsx';
 import Nav from '../../components/Nav.jsx';
 import usePageSetup from '../../hooks/usePageSetup.js';
-import axios from '../../utils/https/axios/customAxios';
+import { customAxios } from '../../utils/https/axios/customAxios';
 
 // TODO: 로그인시 헤더 '로그아웃' 노출
 const ProfilePage = () => {
@@ -24,7 +24,7 @@ const ProfilePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await axios.get('/users/profile');
+        const { data } = await customAxios.get('/users/profile');
         const { name, gender, birth, height, weight } = data;
 
         setName(name);
@@ -41,7 +41,7 @@ const ProfilePage = () => {
 
   const onClick = async () => {
     try {
-      await axios.put('/users/profile', {
+      await customAxios.put('/users/profile', {
         name,
         gender,
         birth,

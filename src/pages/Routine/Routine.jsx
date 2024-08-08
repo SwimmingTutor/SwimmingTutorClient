@@ -1,19 +1,18 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../../components/UI/Button.jsx';
-import axios from '../../utils/https/axios/customAxios';
+import { customAxios } from '../../utils/https/axios/customAxios';
 import PageTitle from '../../components/PageTitle.jsx';
 import moment from 'moment';
 
 const RoutinePage = () => {
-
   const [routineList, setRoutineList] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('/routine/list');
+        const response = await customAxios.get('/routine/list');
         setRoutineList(response.data);
       } catch (error) {
         console.error('Error fetching routine list:', error);

@@ -5,7 +5,7 @@ import Button from '../../components/UI/Button.jsx';
 import SelectBox from '../../components/UI/SelectBox.jsx';
 import Nav from '../../components/Nav.jsx';
 import usePageSetup from '../../hooks/usePageSetup.js';
-import axios from '../../utils/https/axios/customAxios';
+import { customAxios } from '../../utils/https/axios/customAxios';
 
 const strokeOptions = ['자유형', '배영', '평영', '접영'];
 const purposeOptions = ['다이어트', '근력 강화', '건강 증진', '재활'];
@@ -21,7 +21,7 @@ const ExperiencePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('/users/experience');
+        const response = await customAxios.get('/users/experience');
         const { data } = response;
         const { preference, goal } = data;
 
@@ -39,7 +39,7 @@ const ExperiencePage = () => {
 
   const save = async () => {
     try {
-      const response = await axios.put('/users/experience', {
+      const response = await customAxios.put('/users/experience', {
         preference,
         goal
       });

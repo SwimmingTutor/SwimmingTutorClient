@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import axios from '../../utils/https/axios/customAxios';
+import { customAxios } from '../../utils/https/axios/customAxios';
 import InputText from '../../components/UI/InputText.jsx';
 import SelectBox from '../../components/UI/SelectBox.jsx';
 import Button from '../../components/UI/Button.jsx';
@@ -30,7 +30,7 @@ const RoutineUpdatePage = () => {
   const handleUpdate = async () => {
     try {
       // Send the updated data to the server
-      await axios.put(`/routine/update/${routineNo}`, {
+      await customAxios.put(`/routine/update/${routineNo}`, {
         routineName: routineName,
         poolLength: poolLength,
         targetDistance: targetDistance,

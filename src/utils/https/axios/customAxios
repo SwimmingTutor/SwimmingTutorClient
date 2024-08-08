@@ -1,68 +1,9 @@
-const axios = require('axios');
+import createAxiosInstance from "./customAxiosInstance";
 
 const baseURL = process.env.REACT_APP_API_URL;
+const fastApiBaseURL = process.env.REACT_APP_FASTAPI_URL;
 
-const refreshAccessToken = async () => {
-  const oldAccessToken = localStorage.getItem('accessToken');
-  const oldRefreshToken = localStorage.getItem('refreshToken');
+const customAxios = createAxiosInstance(baseURL);
+const fastApiAxios = createAxiosInstance(fastApiBaseURL);
 
-  try {
-    const response = await axios.post(`${baseURL}/refreshToken`, {
-      accessToken: oldAccessToken,
-      refreshToken: oldRefreshToken
-    });
-    const { accessToken, refreshToken } = response.data;
-    localStorage.setItem('accessToken', accessToken);
-    localStorage.setItem('refreshToken', refreshToken);
-    return accessToken;
-  } catch (err) {
-    console.error('Token refresh error:', err);
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
-    window.location.href = '/accounts/login';
-    return err;
-  }
-};
-
-const customAxios = axios.create({
-  baseURL,
-  headers: {
-    'Content-Type': 'application/json'
-  }
-});
-
-customAxios.interceptors.request.use(
-  async config => {
-    const accessToken = localStorage.getItem('accessToken');
-    if (accessToken) {
-      config.headers['Authorization'] = `Bearer ${accessToken}`;
-    }
-    return config;
-  },
-  error => {
-    return Promise.reject(error);
-  }
-);
-
-customAxios.interceptors.response.use(
-  response => response,
-  async error => {
-    const originalRequest = error.config;
-
-    if (error.response.status === 403 && error.response.data.msg === 'Expired Token') {
-      originalRequest._retry = true;
-
-      try {
-        const newAccessToken = await refreshAccessToken();
-        originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
-        return customAxios(originalRequest);
-      } catch (refreshError) {
-        return Promise.reject(refreshError);
-      }
-    }
-
-    return Promise.reject(error);
-  }
-);
-
-export default customAxios;
+export { customAxios, fastApiAxios };

@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import SessionData from '../../components/Routine/SessionForm.jsx';
-import axios from '../../utils/https/axios/customAxios';
+import { customAxios } from '../../utils/https/axios/customAxios';
 import usePageSetup from '../../hooks/usePageSetup.js';
 import PageTitle from '../../components/PageTitle.jsx';
 import Button from '../../components/UI/Button.jsx';
@@ -27,7 +27,7 @@ const RoutineDetailPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`/routine/${routineNo}`);
+        const response = await customAxios.get(`/routine/${routineNo}`);
         setRoutineInfo(response.data);
       } catch (error) {
         console.error(error);
@@ -54,11 +54,11 @@ const RoutineDetailPage = () => {
     },
     []
   );
-  
+
   const handleDelete = async () => {
-    // Request to the server with axios
+    // Request to the server with customAxios
     try {
-      await axios.delete(`/routine/${routineNo}`);
+      await customAxios.delete(`/routine/${routineNo}`);
       // Redirect to /routine page
       navigate('/routine');
     } catch (error) {
@@ -67,7 +67,7 @@ const RoutineDetailPage = () => {
   };
 
   const handleUpdate = async () => {
-    // Request to the server with axios
+    // Request to the server with customAxios
     try {
       navigate('/routine/update', {
         state: {
