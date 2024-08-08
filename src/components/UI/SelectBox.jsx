@@ -5,7 +5,7 @@ import { ChevronDownIcon } from '@heroicons/react/20/solid';
 const SelectBox = ({ label, selectOption, onChange, value }) => {
   const defaultValue = value || selectOption[0];
   const [selected, setSelected] = useState(defaultValue);
-
+  const placeholder = placeholder || '선택해주세요';
   const handleChange = value => {
     setSelected(value);
     if (onChange) {
