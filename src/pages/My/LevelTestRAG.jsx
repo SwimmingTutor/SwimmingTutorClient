@@ -85,7 +85,7 @@ const LevelTestPage = () => {
       });
     } catch (error) {
       console.error('Error posting data:', error);
-      setError('데이터 전송 중 오류가 발생했습니다. 다시 시도해주세요.');
+      alert('데이터 전송 중 오류가 발생했습니다.\n다시 시도해주세요.\n프로필을 입력하지 않았다면 먼저 입력해주세요.');
     }
   };
 
