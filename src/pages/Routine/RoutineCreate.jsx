@@ -68,25 +68,30 @@ const RoutineCreatePage = () => {
   };
 
   return (
-    <>
+    <div className='px-7'>
       <PageTitle title='루틴 생성' />
+      {BLANKDIV[5]}
       <InputText
         label='루틴 이름'
         placeholder='루틴 이름을 입력하세요'
         defaultValue={routineName}
         onChange={handleRoutineName}
       />
+      {BLANKDIV[3]}
       <SelectBox label='레인 길이(m)' selectOption={[25, 50]} defaultValue={poolLength} onChange={setPoolLength} />
+      {BLANKDIV[3]}
       <InputNumber label='목표 거리' unit={100} defaultValue={targetDistance} onChange={handleDistance} />
+      {BLANKDIV[3]}
       <MultiSelectBox
         label='영법 선택'
         selectOption={['자유형', '배영', '평영', '접영']}
         placeholder='훈련할 영법을 선택하세요'
         onChange={handleStrokes}
       />
+      {BLANKDIV[3]}
       {BLANKDIV[9]}
       <Button key='create' content='생성하기' size='fit' onClick={onClick} />
-    </>
+    </div>
   );
 };
 
