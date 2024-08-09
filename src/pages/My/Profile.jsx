@@ -33,8 +33,8 @@ const ProfilePage = () => {
         setBirth(birth);
         setHeight(height);
         setWeight(weight);
-      } catch (error) {
-        console.error(error);
+      } catch (err) {
+        console.error(err);
       }
     };
     fetchData();
@@ -49,10 +49,16 @@ const ProfilePage = () => {
         height,
         weight
       });
-
+      alert('프로필이 수정되었습니다.');
       navigate('/my');
     } catch (err) {
-      console.error(err);
+      if (err.response && err.response.status === 500) {
+        alert('프로필 수정에 실패했습니다.\n회원가입 정보를 입력해주세요.');
+        navigate('/accounts/register');
+      } else {
+        // console.err('Error fetching data:', err);
+        alert('프로필 수정에 실패했습니다.');
+      }
     }
   };
 
