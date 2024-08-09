@@ -90,9 +90,9 @@ const RoutineDetailPage = () => {
   );
 
   return (
-    <div>
-      <PageTitle title={routineInfo.routineName} />
-      {BLANKDIV[5]}
+    <div className='px-7'>
+      <PageTitle title={`${routineInfo.routineName}`} />
+      {BLANKDIV[3]}
       <table className='min-w-full border border-gray-300 bg-white'>
         <tbody>
           <InfoRow label='레인길이' value={`${routineInfo.poolLength}m`} />
@@ -102,13 +102,13 @@ const RoutineDetailPage = () => {
           <InfoRow label='수정일시' value={formatDate(routineInfo.updated)} />
         </tbody>
       </table>
-      {BLANKDIV[5]}
+      {BLANKDIV[1]}
       <div className='mt-4 flex justify-between'>
         <Button key='delete' onClick={handleDelete} content='삭제' type='cancel' />
         <Button key='update' onClick={handleUpdate} content='수정' />
       </div>
-      {BLANKDIV[7]}
-      <div className='grid gap-4'>
+      {BLANKDIV[3]}
+      <div className='grid gap-3'>
         {sessionName.map((name, index) => (
           <SessionData key={name} title={name} data={categorizedData[index]} />
         ))}

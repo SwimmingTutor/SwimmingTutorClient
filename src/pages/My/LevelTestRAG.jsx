@@ -77,6 +77,7 @@ const LevelTestPage = () => {
       // Redirect to result page
       navigate('/my/level/test/result', {
         state: {
+          stroke: strokeNameInKorean,
           level: level,
           description: description
         }
@@ -103,7 +104,7 @@ const LevelTestPage = () => {
         value={technique || techniqueOptions[0]}
         onChange={setTechnique}
       />
-      {BLANKDIV[10]}
+      {BLANKDIV[9]}
       <Button size='large' content='결과확인' onClick={handleSubmit} />
     </div>
   );

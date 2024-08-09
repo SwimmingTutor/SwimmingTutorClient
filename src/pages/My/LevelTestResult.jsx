@@ -16,7 +16,7 @@ const LevelTestResult = () => {
       <PageTitle title='테스트 결과' />
       {data ? (
         <CenterWrapper>
-          <PageInfoText title={`${data.level}`} content={`${data.description}`} />
+          <PageInfoText title={`${data.stroke} ${data.level}`} content={`${data.description}`} />
           {BLANKDIV[8]}
           <Button content='확인' onClick={() => navigate('/my/level')} />
         </CenterWrapper>

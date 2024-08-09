@@ -47,26 +47,26 @@ const ReportGraph = () => {
     try {
       const response = await customAxios.get('/report');
       const transformedData = transformData(response.data);
+
+      console.log('Transformed Data:', transformedData); // 변환된 데이터가 배열인지 확인
+
       const maxValues = calculateMaxValues(response.data);
 
-      // 모든 데이터가 비어 있는지 확인
       const isAllDataEmpty = checkIfAllDataEmpty(maxValues);
       setAllDataEmpty(isAllDataEmpty);
 
-      // Data와 maxValues 설정
       if (isAllDataEmpty) {
-        setAllDataEmpty(true);
-        setData([]);
+        setData([]); // 빈 배열로 설정
         setMaxValues({});
       } else {
-        setAllDataEmpty(false);
-        setData(transformedData);
+        if (Array.isArray(transformedData)) {
+          setData(transformedData); // 배열로 설정된 transformedData 사용
+          setDateRangeForPage(transformedData, 0);
+        } else {
+          console.error('Transformed data is not an array:', transformedData);
+          setData([]); // 배열이 아닌 경우 빈 배열로 설정
+        }
         setMaxValues(maxValues);
-      }
-
-      // 날짜 범위를 설정
-      if (transformedData.length > 0) {
-        setDateRangeForPage(transformedData, 0);
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
@@ -79,7 +79,7 @@ const ReportGraph = () => {
 
   // 데이터 변환
   const transformData = rawData => {
-    return rawData
+    const transformedObject = rawData
       .filter(item => Object.values(categoryMapping).includes(item.category))
       .reduce((acc, item) => {
         const { startTime } = item;
@@ -95,6 +95,11 @@ const ReportGraph = () => {
         acc[formattedDate][category] = value;
         return acc;
       }, {});
+
+    // 객체를 배열로 변환
+    const transformedArray = Object.values(transformedObject);
+    console.log('Transformed Array:', transformedArray);
+    return transformedArray;
   };
 
   // 최대값 계산
@@ -122,12 +127,12 @@ const ReportGraph = () => {
   const setDateRangeForPage = (data, pageIndex) => {
     const startIndex = pageIndex * 7;
     const endIndex = Math.min(startIndex + 7, data.length);
-    const pageData = Object.values(data).slice(startIndex, endIndex);
+    const pageData = data.slice(startIndex, endIndex);
 
     if (pageData.length > 0) {
       const startDate = moment(pageData[0].name);
       const endDate = moment(startDate).add(6, 'days');
-      const dateRange = `${startDate.format('M.DD')} ~ ${endDate.format('M.DD')}`;
+      const dateRange = `${startDate.format('MM.DD')} ~ ${endDate.format('MM.DD')}`;
       setDateRange(dateRange);
     } else {
       setDateRange('');
@@ -201,6 +206,7 @@ const ReportGraph = () => {
     <div style={{ width: '100%', height: 'auto', minHeight: '600px' }}>
       <PageTitle title='분석 보고서' />
       <div className='px-7'>
+        {BLANKDIV[3]}
         <label htmlFor='categorySelect'>카테고리 선택: </label>
         <select
           id='categorySelect'
@@ -220,6 +226,7 @@ const ReportGraph = () => {
           <option value='heartRate'>심박수</option>
         </select>
       </div>
+      {BLANKDIV[3]}
       {allDataEmpty || isUnauthorized ? (
         <div style={{ textAlign: 'center', marginTop: '20px' }}>
           <img
@@ -262,7 +269,7 @@ const ReportGraph = () => {
           </div>
           <ResponsiveContainer width='100%' height={300}>
             <LineChart
-              data={Object.values(data).slice(pageIndex * 7, (pageIndex + 1) * 7)}
+              data={data.slice(pageIndex * 7, (pageIndex + 1) * 7)}
               margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
             >
               <CartesianGrid strokeDasharray='3 3' />
@@ -302,14 +309,14 @@ const ReportGraph = () => {
               />
               <Legend />
               {renderLines()}
-              {Object.values(data).map(d => (
+              {data.map(d => (
                 <ReferenceDot key={d.name} x={d.name} y={d[selectedCategory]} r={4} fill='red' stroke='none' />
               ))}
             </LineChart>
           </ResponsiveContainer>
         </div>
       )}
-      {BLANKDIV[6]}
+      {BLANKDIV[7]}
       <PageTitle title='나의 기록' />
       <div
         style={{

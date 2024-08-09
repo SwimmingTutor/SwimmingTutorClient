@@ -8,8 +8,9 @@ function getHeaderType(type) {
   return {
     home: <Logo />,
     swimmingpool: <PageTitle title='수영장'></PageTitle>,
-    routine: <PageTitle title='루틴'></PageTitle>,
-    my: <PageTitle title='마이'></PageTitle>
+    routine: <PageTitle title='수영 루틴'></PageTitle>,
+    my: <PageTitle title='마이'></PageTitle>,
+    join: <PageTitle title='회원가입'></PageTitle>
   }[type];
 }
 
@@ -31,7 +32,7 @@ const Header = () => {
   };
 
   return (
-    <header id='header' className='fixed top-0 z-40 bg-white w-full  lg:w-app'>
+    <header id='header' className='fixed top-0 z-40 w-full bg-white  lg:w-app'>
       <div className='mx-auto flex h-14 items-center justify-between px-5 lg:w-app'>
         <div className='flex max-w-[7rem] items-center'>{getHeaderType(headerType)}</div>
         <div className='flex space-x-4 text-xs'>
@@ -44,9 +45,9 @@ const Header = () => {
               <Link className='cursor-pointer hover:text-primary-500' to='/accounts/login'>
                 로그인
               </Link>
-              <Link className='cursor-pointer hover:text-primary-500' to='/accounts/join'>
+              {/* <Link className='cursor-pointer hover:text-primary-500' to='/accounts/join'>
                 회원가입
-              </Link>
+              </Link> */}
             </>
           )}
         </div>

@@ -7,6 +7,7 @@ import InputText from '../../components/UI/InputText.jsx';
 import Button from '../../components/UI/Button.jsx';
 import { customAxios } from '../../utils/https/axios/customAxios';
 import { useNavigate } from 'react-router-dom';
+import BLANKDIV from '../../constants/blankDiv.js';
 
 const RoutineCreatePage = () => {
   const navigate = useNavigate();
@@ -83,6 +84,7 @@ const RoutineCreatePage = () => {
         placeholder='훈련할 영법을 선택하세요'
         onChange={handleStrokes}
       />
+      {BLANKDIV[9]}
       <Button key='create' content='생성하기' size='fit' onClick={onClick} />
     </>
   );

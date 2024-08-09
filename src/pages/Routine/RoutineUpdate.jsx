@@ -5,6 +5,7 @@ import InputText from '../../components/UI/InputText.jsx';
 import SelectBox from '../../components/UI/SelectBox.jsx';
 import Button from '../../components/UI/Button.jsx';
 import PageTitle from '../../components/PageTitle.jsx';
+import BLANKDIV from '../../constants/blankDiv.js';
 
 const RoutineUpdatePage = () => {
   const location = useLocation();
@@ -47,16 +48,18 @@ const RoutineUpdatePage = () => {
   };
 
   return (
-    <div>
+    <div className='px-7'>
       <PageTitle title='루틴 수정' />
+      {BLANKDIV[5]}
       <InputText
         label='루틴명'
         placeholder={initialState.routineName}
         defaultValue={routineName}
         onChange={handleRoutineName}
       />
+      {BLANKDIV[3]}
       <SelectBox label='레인 길이(m)' selectOption={[25, 50]} value={poolLength} onChange={setPoolLength} />
-      <div className='h-5' />
+      {BLANKDIV[9]}
       <div className='mt-4 flex justify-between'>
         <Button key='cancel' onClick={handleCancel} content='취소' type='cancel' />
         <Button key='update' onClick={handleUpdate} content='수정완료' />

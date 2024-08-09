@@ -64,24 +64,24 @@ const ProfilePage = () => {
     <>
       <OAuthHeader headerType='profile' off='true' />
       <div className='px-7'>
-        <p>
+        <p style={{ 'font-size': 'small' }}>
           <b>*</b> 항목은 필수 입력사항입니다.
         </p>
-        {BLANKDIV[6]}
+        {BLANKDIV[3]}
         <InputText label='닉네임 *' defaultValue={name} placeholder='닉네임' onChange={setName} />
-        {BLANKDIV[6]}
+        {BLANKDIV[3]}
         {/* TODO: 성별 - select box로 변경 */}
         {/* <InputText label='성별' placeholder='성별' /> */}
         <GenderRadio value={gender} label='성별 *' onChange={setGender}></GenderRadio>
-        {BLANKDIV[6]}
+        {BLANKDIV[3]}
         <InputText type='date' defaultValue={birth} label='생년월일 *' onChange={setBirth} />
-        {BLANKDIV[6]}
+        {BLANKDIV[3]}
         <InputText type='number' defaultValue={height} label='신장(cm)' placeholder='신장' onChange={setHeight} />
-        {BLANKDIV[6]}
+        {BLANKDIV[3]}
         <InputText type='number' defaultValue={weight} label='체중(kg)' placeholder='체중' onChange={setWeight} />
-        {BLANKDIV[8]}
+        {BLANKDIV[5]}
         <Button content='완료' onClick={onClick}></Button>
-        {BLANKDIV[6]}
+        {BLANKDIV[5]}
         {/* <a className='mt-4 flex justify-center' onClick={handleOpenAccountModal}>
           <span className='text-sm text-gray-500 underline'>계정 삭제</span>
         </a> */}

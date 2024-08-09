@@ -165,7 +165,8 @@ const router = createBrowserRouter([
       },
       {
         path: 'join',
-        element: <JoinPage />
+        // element: <JoinPage />
+        element: <RegisterPage />,
       },
       {
         path: 'terms',
