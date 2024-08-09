@@ -47,11 +47,7 @@ const ReportGraph = () => {
     try {
       const response = await customAxios.get('/report');
       const transformedData = transformData(response.data);
-
-      console.log('Transformed Data:', transformedData); // 변환된 데이터가 배열인지 확인
-
       const maxValues = calculateMaxValues(response.data);
-
       const isAllDataEmpty = checkIfAllDataEmpty(maxValues);
       setAllDataEmpty(isAllDataEmpty);
 
@@ -98,7 +94,6 @@ const ReportGraph = () => {
 
     // 객체를 배열로 변환
     const transformedArray = Object.values(transformedObject);
-    console.log('Transformed Array:', transformedArray);
     return transformedArray;
   };
 

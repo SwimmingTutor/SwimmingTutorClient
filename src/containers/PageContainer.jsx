@@ -10,7 +10,7 @@ import Nav from '../components/Nav.jsx';
 
 const PageContainer = ({ children }) => {
   const { headerType, handleHeaderType } = useHeaderContext();
-  console.log('headerType:', headerType);
+  // console.log('headerType:', headerType);
 
   return (
     <>
